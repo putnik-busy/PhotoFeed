@@ -1,0 +1,92 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.justapp.photofeed"
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+
+        debug {
+            debuggable true
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+ext {
+    junitVersion = '4.12'
+    daggerVersion = '2.14.1'
+    rxJavaVersion = '2.1.1'
+    rxAndroidVersion = '2.0.1'
+    rxLintVersion = '1.6'
+    retrofitVersion = '2.3.0'
+    okHttpVersion = '3.4.1'
+    glideVersion = '4.6.1'
+    photoViewVersion = '2.1.2'
+    espressoVersion = '3.0.1'
+    timberVersion = '4.6.0'
+    robolectricVersion = '3.3.2'
+    mockitoVersion = '2.7.1'
+    runnerVersion = '1.0.1'
+    multidexVersion = '1.0.3'
+
+    //android-support
+    appcompatVersion = '27.1.1'
+    constraintVersion = '1.0.2'
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    //test
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    androidTestImplementation "com.android.support.test:runner:$runnerVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoVersion"
+
+    //dagger2
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+    testAnnotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+
+    //rxjava2
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
+    implementation "nl.littlerobots.rxlint:rxlint:$rxLintVersion"
+
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
+
+    //other
+    implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+    implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
+    implementation "com.jakewharton.timber:timber:$timberVersion"
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    implementation "com.github.chrisbanes:PhotoView:$photoViewVersion"
+    implementation "com.android.support:multidex:$multidexVersion"
+
+    //android-support
+    implementation "com.android.support:appcompat-v7:$appcompatVersion"
+    implementation "com.android.support.constraint:constraint-layout:$constraintVersion"
+    implementation "com.android.support:design:$appcompatVersion"
+    implementation "com.android.support:support-v4:$appcompatVersion"
+    implementation "com.android.support:cardview-v7:$appcompatVersion"
+    implementation "com.android.support:recyclerview-v7:$appcompatVersion"
+}

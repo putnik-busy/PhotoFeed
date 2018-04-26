@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">PhotoFeed</string>
+    <string name="feed">Лента</string>>
+    <string name="favorits">Избранные</string>>
+    <string name="settings">Настройки</string>>
+    <string name="share">Поделиться</string>>
+</resources>

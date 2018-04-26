@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_photo"
+        android:icon="@drawable/ic_photo_black"
+        android:title="@string/feed"/>
+
+    <item
+        android:id="@+id/menu_favorits"
+        android:icon="@drawable/ic_favorite_black"
+        android:title="@string/favorits"/>
+
+    <item
+        android:id="@+id/menu_settings"
+        android:icon="@drawable/ic_more_horiz_black"
+        android:title="@string/settings"/>
+
+</menu>
