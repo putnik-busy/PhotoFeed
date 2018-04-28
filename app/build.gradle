@@ -36,15 +36,14 @@ ext {
     rxLintVersion = '1.6'
     retrofitVersion = '2.3.0'
     okHttpVersion = '3.4.1'
-    glideVersion = '4.6.1'
     photoViewVersion = '2.1.2'
     espressoVersion = '3.0.1'
-    timberVersion = '4.6.0'
-    robolectricVersion = '3.3.2'
     mockitoVersion = '2.7.1'
     runnerVersion = '1.0.1'
-    multidexVersion = '1.0.3'
-    roomVersion = '1.0.0'
+    gsonVersion = '2.8.2'
+    picassoVersion = '2.5.2'
+    picassoDownloaderVersion = '1.0.2'
+    moxyVersion = '1.5.3'
 
     //android-support
     appcompatVersion = '27.1.1'
@@ -71,23 +70,23 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
     implementation "nl.littlerobots.rxlint:rxlint:$rxLintVersion"
 
-    //retrofit
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
-
-    // Room
-    implementation "android.arch.persistence.room:runtime:$roomVersion"
-    implementation "android.arch.persistence.room:compiler:$roomVersion"
-    implementation "android.arch.persistence.room:testing:$roomVersion"
-    implementation "android.arch.persistence.room:rxjava2:$roomVersion"
-
-    //other
+    //retrofit&OkHttp
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
     implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
-    implementation "com.jakewharton.timber:timber:$timberVersion"
-    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
+    //moxy
+    implementation "com.arello-mobile:moxy:$moxyVersion"
+    implementation "com.arello-mobile:moxy-app-compat:$moxyVersion"
+    annotationProcessor "com.arello-mobile:moxy-compiler:$moxyVersion"
+
+    //other
     implementation "com.github.chrisbanes:PhotoView:$photoViewVersion"
-    implementation "com.android.support:multidex:$multidexVersion"
+    implementation "com.google.code.gson:gson:$gsonVersion"
+    implementation "com.squareup.picasso:picasso:$picassoVersion"
+    implementation "com.jakewharton.picasso:picasso2-okhttp3-downloader:$picassoDownloaderVersion"
 
     //android-support
     implementation "com.android.support:appcompat-v7:$appcompatVersion"
