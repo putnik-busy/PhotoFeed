@@ -1,4 +1,4 @@
-package com.justapp.photofeed.utils.rx;
+package com.justapp.photofeed.rx;
 
 import android.support.annotation.NonNull;
 

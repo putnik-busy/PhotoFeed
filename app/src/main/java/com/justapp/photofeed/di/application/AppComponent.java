@@ -2,6 +2,8 @@ package com.justapp.photofeed.di.application;
 
 import android.app.Application;
 
+import com.justapp.photofeed.PhotoFeedApp;
+import com.justapp.photofeed.di.auth.AuthComponent;
 import com.justapp.photofeed.di.data.DataComponent;
 
 import javax.inject.Singleton;
@@ -29,6 +31,10 @@ public interface AppComponent {
         AppComponent build();
     }
 
+    void inject(PhotoFeedApp photoFeedApp);
+
     DataComponent.Builder createDataComponent();
+
+    AuthComponent.Builder createAuthComponent();
 
 }

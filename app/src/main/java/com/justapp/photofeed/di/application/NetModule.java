@@ -7,10 +7,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.jakewharton.picasso.OkHttp3Downloader;
+import com.justapp.photofeed.keystore.KeyStoreManager;
 import com.justapp.photofeed.data.network.AuthInterceptor;
 import com.justapp.photofeed.data.network.LoggingInterceptor;
 import com.justapp.photofeed.data.network.RestApi;
-import com.justapp.photofeed.utils.rx.RxSchedulers;
+import com.justapp.photofeed.rx.RxSchedulers;
 import com.squareup.picasso.Picasso;
 
 import java.util.Date;
@@ -36,10 +37,12 @@ public class NetModule {
 
     @Singleton
     @Provides
-    OkHttpClient provideOkHttpClient() {
+    OkHttpClient provideOkHttpClient(@NonNull KeyStoreManager keyStoreManager,
+                                     @NonNull AuthInterceptor interceptor) {
+        interceptor.setToken(keyStoreManager.getToken());
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .addInterceptor(new LoggingInterceptor())
-                .addInterceptor(new AuthInterceptor())
+                .addInterceptor(interceptor)
                 .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(TIMEOUT, TimeUnit.SECONDS);
 
@@ -81,6 +84,12 @@ public class NetModule {
                 .loggingEnabled(false)
                 .indicatorsEnabled(true)
                 .build();
+    }
+
+    @Singleton
+    @Provides
+    AuthInterceptor provideAuthInterceptor() {
+        return new AuthInterceptor();
     }
 
 }

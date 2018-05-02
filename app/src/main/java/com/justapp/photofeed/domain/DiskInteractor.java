@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
 /**
@@ -25,12 +26,12 @@ public class DiskInteractor {
         mDiskRepository = diskRepository;
     }
 
-    public Single<DiskInfoModel> getDiskInfo() {
-        return mDiskRepository.getDiskInfo();
+    public Single<DiskInfoModel> loadDiskInfo() {
+        return mDiskRepository.loadDiskInfo();
     }
 
-    public Single<ImageListModel> getFiles(int limit, int offset) {
-        return mDiskRepository.getFiles(getFilterFilesParams(limit, offset));
+    public Observable<ImageListModel> loadPhotos(int limit, int offset) {
+        return mDiskRepository.loadPhotos(getFilterFilesParams(limit, offset));
     }
 
     private Map<String, String> getFilterFilesParams(int limit, int offset) {

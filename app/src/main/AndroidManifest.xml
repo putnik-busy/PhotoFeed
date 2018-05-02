@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.justapp.photofeed"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.justapp.photofeed">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -12,12 +12,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".MainActivity">
+        <activity android:name=".presentation.auth.activity.AuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="com.justapp.photofeed.oauth"/>
+
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:scheme="com.justapp.photofeed.oauth"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".presentation.feed.activity.FeedActivity"
+            android:launchMode="singleTop">
         </activity>
 
         <activity android:name=".PhotoViewActivity"/>

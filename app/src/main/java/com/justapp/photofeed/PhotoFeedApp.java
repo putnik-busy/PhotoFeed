@@ -13,6 +13,7 @@ public class PhotoFeedApp extends Application {
     public void onCreate() {
         super.onCreate();
         AppInjector.createAppComponent(this);
+        AppInjector.getAppComponent().inject(this);
     }
 
 }

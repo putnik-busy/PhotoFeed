@@ -1,7 +1,5 @@
 package com.justapp.photofeed.models.local.disk.resources;
 
-import com.justapp.photofeed.models.remote.disk.resources.Item;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,14 +8,36 @@ import java.util.List;
  */
 public class ImageListModel {
 
-    private List<Item> mItems = new ArrayList<>();
+    private List<ItemModel> mItems = new ArrayList<>();
 
 
-    public List<Item> getItems() {
+    public List<ItemModel> getItems() {
         return mItems;
     }
 
-    public void setItems(List<Item> items) {
+    public void setItems(List<ItemModel> items) {
         mItems = items;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ImageListModel that = (ImageListModel) o;
+
+        return mItems != null ? mItems.equals(that.mItems) : that.mItems == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return mItems != null ? mItems.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "ImageListModel{" +
+                "mItems=" + mItems +
+                '}';
     }
 }

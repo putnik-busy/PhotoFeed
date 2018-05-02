@@ -1,7 +1,7 @@
 package com.justapp.photofeed.di.application;
 
-import com.justapp.photofeed.utils.rx.RxSchedulers;
-import com.justapp.photofeed.utils.rx.RxSchedulersImpl;
+import com.justapp.photofeed.rx.RxSchedulers;
+import com.justapp.photofeed.rx.RxSchedulersImpl;
 
 import dagger.Binds;
 import dagger.Module;

@@ -3,7 +3,12 @@ package com.justapp.photofeed.data.mappers;
 import android.support.annotation.NonNull;
 
 import com.justapp.photofeed.models.local.disk.resources.ImageListModel;
+import com.justapp.photofeed.models.local.disk.resources.ItemModel;
 import com.justapp.photofeed.models.remote.disk.resources.ImageListResponse;
+import com.justapp.photofeed.models.remote.disk.resources.Item;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -14,9 +19,11 @@ import dagger.internal.Preconditions;
  */
 public class ImageListMapper implements Mapper<ImageListResponse, ImageListModel> {
 
+    private final ItemMapper mItemMapper;
+
     @Inject
-    public ImageListMapper() {
-        //необходим для dagger
+    public ImageListMapper(ItemMapper itemMapper) {
+        mItemMapper = itemMapper;
     }
 
     @NonNull
@@ -24,7 +31,12 @@ public class ImageListMapper implements Mapper<ImageListResponse, ImageListModel
     public ImageListModel convert(ImageListResponse remote) {
         Preconditions.checkNotNull(remote);
         ImageListModel imageListModel = new ImageListModel();
-        imageListModel.setItems(remote.getItems());
+        List<ItemModel> itemModels = new ArrayList<>();
+        for (Item item : remote.getItems()) {
+            ItemModel itemModel = mItemMapper.convert(item);
+            itemModels.add(itemModel);
+        }
+        imageListModel.setItems(itemModels);
         return imageListModel;
     }
 }

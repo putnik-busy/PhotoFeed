@@ -9,7 +9,7 @@ public class DataInjector {
 
     private static DataComponent sDataComponent;
 
-    public static DataComponent createAuthComponent() {
+    public static DataComponent createDataComponent() {
         if (sDataComponent == null) {
             sDataComponent = AppInjector.getAppComponent()
                     .createDataComponent()
@@ -18,7 +18,7 @@ public class DataInjector {
         return sDataComponent;
     }
 
-    public static void clearAuthModule() {
+    public static void clearDataModule() {
         sDataComponent = null;
     }
 

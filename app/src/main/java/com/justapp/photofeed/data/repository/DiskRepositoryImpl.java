@@ -11,6 +11,7 @@ import com.justapp.photofeed.models.local.disk.resources.ImageListModel;
 
 import java.util.Map;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
 /**
@@ -31,14 +32,14 @@ public class DiskRepositoryImpl implements DiskRepository {
     }
 
     @Override
-    public Single<DiskInfoModel> getDiskInfo() {
+    public Single<DiskInfoModel> loadDiskInfo() {
         return mRestApi.getDiskInfo()
                 .map(mDiskInfoMapper::convert);
     }
 
     @Override
-    public Single<ImageListModel> getFiles(Map<String, String> map) {
-        return mRestApi.getFiles(map)
+    public Observable<ImageListModel> loadPhotos(Map<String, String> map) {
+        return mRestApi.getPhotos(map)
                 .map(mImageListMapper::convert);
     }
 

@@ -5,6 +5,7 @@ import com.justapp.photofeed.models.local.disk.resources.ImageListModel;
 
 import java.util.Map;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
 /**
@@ -12,7 +13,7 @@ import io.reactivex.Single;
  */
 public interface DiskRepository {
 
-    Single<DiskInfoModel> getDiskInfo();
+    Single<DiskInfoModel> loadDiskInfo();
 
-    Single<ImageListModel> getFiles(Map<String, String> map);
+    Observable<ImageListModel> loadPhotos(Map<String, String> map);
 }

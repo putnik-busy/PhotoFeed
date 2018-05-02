@@ -6,9 +6,8 @@ import com.justapp.photofeed.data.mappers.DiskInfoMapper;
 import com.justapp.photofeed.data.mappers.ImageListMapper;
 import com.justapp.photofeed.data.network.RestApi;
 import com.justapp.photofeed.data.repository.DiskRepositoryImpl;
+import com.justapp.photofeed.di.scope.DataScope;
 import com.justapp.photofeed.domain.repository.DiskRepository;
-
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -19,7 +18,7 @@ import dagger.Provides;
 @Module
 public class DataModule {
 
-    @Singleton
+    @DataScope
     @Provides
     public DiskRepository provideDiskRepository(@NonNull RestApi restApi,
                                                 @NonNull DiskInfoMapper diskInfoMapper,
