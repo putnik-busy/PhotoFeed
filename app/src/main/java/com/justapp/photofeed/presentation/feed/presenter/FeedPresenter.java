@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.justapp.photofeed.domain.DiskInteractor;
-import com.justapp.photofeed.keystore.KeyStoreManager;
 import com.justapp.photofeed.models.local.disk.resources.ImageListModel;
 import com.justapp.photofeed.presentation.base.BasePresenter;
 import com.justapp.photofeed.presentation.feed.view.PhotoView;
@@ -21,20 +20,13 @@ import io.reactivex.observers.DisposableObserver;
 @InjectViewState
 public class FeedPresenter extends BasePresenter<PhotoView> {
 
-    private KeyStoreManager mKeyStoreManager;
     private DiskInteractor mDiskInteractor;
     private RxSchedulers mRxSchedulers;
     private CompositeDisposable mCompositeDisposable;
 
-    public FeedPresenter() {
-
-    }
-
     @Inject
-    public FeedPresenter(@NonNull KeyStoreManager keyStoreManager,
-                         @NonNull DiskInteractor diskInteractor,
+    public FeedPresenter(@NonNull DiskInteractor diskInteractor,
                          @NonNull RxSchedulers rxSchedulers) {
-        mKeyStoreManager = keyStoreManager;
         mDiskInteractor = diskInteractor;
         mRxSchedulers = rxSchedulers;
         mCompositeDisposable = new CompositeDisposable();
@@ -74,10 +66,5 @@ public class FeedPresenter extends BasePresenter<PhotoView> {
                     }
                 }));
 
-    }
-
-    public void logout() {
-        mKeyStoreManager.deleteToken();
-        getViewState().logout();
     }
 }

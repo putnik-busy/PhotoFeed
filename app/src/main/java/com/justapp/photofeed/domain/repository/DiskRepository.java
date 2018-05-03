@@ -16,4 +16,6 @@ public interface DiskRepository {
     Single<DiskInfoModel> loadDiskInfo();
 
     Observable<ImageListModel> loadPhotos(Map<String, String> map);
+
+    void logoutUser();
 }

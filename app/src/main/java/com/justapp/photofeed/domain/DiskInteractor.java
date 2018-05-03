@@ -2,6 +2,7 @@ package com.justapp.photofeed.domain;
 
 import android.support.annotation.NonNull;
 
+import com.justapp.photofeed.data.keystore.KeyStoreManager;
 import com.justapp.photofeed.domain.repository.DiskRepository;
 import com.justapp.photofeed.models.local.disk.info.DiskInfoModel;
 import com.justapp.photofeed.models.local.disk.resources.ImageListModel;
@@ -20,10 +21,13 @@ import io.reactivex.Single;
 public class DiskInteractor {
 
     private final DiskRepository mDiskRepository;
+    private final KeyStoreManager mKeyStoreManager;
 
     @Inject
-    public DiskInteractor(@NonNull DiskRepository diskRepository) {
+    public DiskInteractor(@NonNull DiskRepository diskRepository,
+                          @NonNull KeyStoreManager keyStoreManager) {
         mDiskRepository = diskRepository;
+        mKeyStoreManager = keyStoreManager;
     }
 
     public Single<DiskInfoModel> loadDiskInfo() {
@@ -32,6 +36,10 @@ public class DiskInteractor {
 
     public Observable<ImageListModel> loadPhotos(int limit, int offset) {
         return mDiskRepository.loadPhotos(getFilterFilesParams(limit, offset));
+    }
+
+    public void logout() {
+        mDiskRepository.logoutUser();
     }
 
     private Map<String, String> getFilterFilesParams(int limit, int offset) {
