@@ -1,14 +1,16 @@
-package com.justapp.photofeed.keystore;
+package com.justapp.photofeed.data.keystore;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * @author Sergey Rodionov
  */
+@Singleton
 public final class KeyStoreHelper {
 
     private static final String SHARED_PREF_NAME = "KEYSTORE_SETTING";

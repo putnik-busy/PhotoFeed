@@ -52,9 +52,9 @@ public class PhotoFeedAdapter extends RecyclerView.Adapter<PhotoFeedViewHolder> 
         notifyItemInserted(mItemModels.size() - 1);
     }
 
-    public void addAllPhotos(@NonNull List<ItemModel> stations) {
+    public void addAllPhotos(@NonNull List<ItemModel> itemModels) {
         mItemModels.clear();
-        mItemModels.addAll(stations);
+        mItemModels.addAll(itemModels);
         notifyDataSetChanged();
     }
 

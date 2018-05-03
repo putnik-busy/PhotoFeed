@@ -3,15 +3,20 @@ package com.justapp.photofeed.di.application;
 import com.justapp.photofeed.rx.RxSchedulers;
 import com.justapp.photofeed.rx.RxSchedulersImpl;
 
-import dagger.Binds;
+import javax.inject.Singleton;
+
 import dagger.Module;
+import dagger.Provides;
 
 /**
  * @author Sergey Rodionov
  */
 @Module
-public interface RxModule {
+public class RxModule {
 
-    @Binds
-    RxSchedulers provideRxSchedulers(RxSchedulersImpl rxSchedulers);
+    @Singleton
+    @Provides
+    public RxSchedulers provideRxSchedulers() {
+        return new RxSchedulersImpl();
+    }
 }

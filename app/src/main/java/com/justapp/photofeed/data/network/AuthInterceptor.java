@@ -21,10 +21,10 @@ public class AuthInterceptor implements Interceptor {
     public Response intercept(@NonNull Chain chain) throws IOException {
         Request request = chain.request();
         String formatHeader = String.format("%s %s", TOKEN_TYPE, mToken);
-        request.newBuilder()
+        request = request.newBuilder()
                 .addHeader(HEADER, formatHeader)
                 .build();
-        return null;
+        return chain.proceed(request);
     }
 
     public void setToken(@NonNull String token) {

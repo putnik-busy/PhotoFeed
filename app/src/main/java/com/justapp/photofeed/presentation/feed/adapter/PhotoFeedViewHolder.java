@@ -24,7 +24,7 @@ public class PhotoFeedViewHolder extends RecyclerView.ViewHolder implements View
         super(itemView);
         mPicasso = picasso;
         mRecyclerViewItemListener = recyclerViewItemListener;
-        mImageView = itemView.findViewById(R.id.item_photo);
+        mImageView = itemView.findViewById(R.id.image_view_photo);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.justapp.photofeed.keystore;
+package com.justapp.photofeed.data.keystore;
 
 import android.support.annotation.NonNull;
 

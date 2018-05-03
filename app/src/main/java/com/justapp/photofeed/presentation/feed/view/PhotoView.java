@@ -18,5 +18,4 @@ public interface PhotoView extends BaseView {
 
     void showErrorMessage(String message);
 
-    void logout();
 }

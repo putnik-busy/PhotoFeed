@@ -15,10 +15,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.justapp.photofeed.R;
 import com.justapp.photofeed.di.data.DataComponent;
 import com.justapp.photofeed.di.data.DataInjector;
 import com.justapp.photofeed.models.local.disk.resources.ItemModel;
+import com.justapp.photofeed.presentation.auth.presenter.AuthPresenter;
 import com.justapp.photofeed.presentation.base.BaseFragment;
 import com.justapp.photofeed.presentation.feed.adapter.PhotoFeedAdapter;
 import com.justapp.photofeed.presentation.feed.adapter.RecyclerViewItemListener;
@@ -61,7 +63,8 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getComponent(DataComponent.class).inject(this);
+        DataInjector.createDataComponent().inject(this);
+       // getComponent(DataComponent.class).inject(this);
     }
 
     @Nullable
@@ -78,7 +81,7 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
         initViews(view);
         mFeedPresenter.attachView(this);
         mPhotoFeedAdapter = new PhotoFeedAdapter(this, mPicasso);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), R.integer.grid_span);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),  view.getResources().getInteger(R.integer.grid_span));
         mRecyclerView.setAdapter(mPhotoFeedAdapter);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.addOnScrollListener(new PhotosOnScrollListener(layoutManager));
@@ -145,13 +148,13 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
     }
 
     @Override
-    public void logout() {
+    public void onItemClick(RecyclerView.ViewHolder sender, int adapterPosition, int viewType) {
 
     }
 
-    @Override
-    public void onItemClick(RecyclerView.ViewHolder sender, int adapterPosition, int viewType) {
-
+    @ProvidePresenter
+    public FeedPresenter provideFeedPresenter() {
+        return mFeedPresenter;
     }
 
     private void initViews(@NonNull View view) {

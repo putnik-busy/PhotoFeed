@@ -2,6 +2,7 @@ package com.justapp.photofeed.di.data;
 
 import android.support.annotation.NonNull;
 
+import com.justapp.photofeed.data.keystore.KeyStoreManager;
 import com.justapp.photofeed.data.mappers.DiskInfoMapper;
 import com.justapp.photofeed.data.mappers.ImageListMapper;
 import com.justapp.photofeed.data.network.RestApi;
@@ -22,8 +23,9 @@ public class DataModule {
     @Provides
     public DiskRepository provideDiskRepository(@NonNull RestApi restApi,
                                                 @NonNull DiskInfoMapper diskInfoMapper,
-                                                @NonNull ImageListMapper imageListMapper) {
-        return new DiskRepositoryImpl(restApi, diskInfoMapper, imageListMapper);
+                                                @NonNull ImageListMapper imageListMapper,
+                                                @NonNull KeyStoreManager keyStoreManager) {
+        return new DiskRepositoryImpl(restApi, diskInfoMapper, imageListMapper, keyStoreManager);
     }
 
 }

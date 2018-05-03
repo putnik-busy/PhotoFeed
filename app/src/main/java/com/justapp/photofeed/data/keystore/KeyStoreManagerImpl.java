@@ -1,4 +1,4 @@
-package com.justapp.photofeed.keystore;
+package com.justapp.photofeed.data.keystore;
 
 import android.content.Context;
 import android.os.Build;

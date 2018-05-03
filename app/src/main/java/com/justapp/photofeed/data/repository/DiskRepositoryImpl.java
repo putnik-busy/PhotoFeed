@@ -2,6 +2,7 @@ package com.justapp.photofeed.data.repository;
 
 import android.support.annotation.NonNull;
 
+import com.justapp.photofeed.data.keystore.KeyStoreManager;
 import com.justapp.photofeed.data.mappers.DiskInfoMapper;
 import com.justapp.photofeed.data.mappers.ImageListMapper;
 import com.justapp.photofeed.data.network.RestApi;
@@ -22,13 +23,16 @@ public class DiskRepositoryImpl implements DiskRepository {
     private final RestApi mRestApi;
     private final DiskInfoMapper mDiskInfoMapper;
     private final ImageListMapper mImageListMapper;
+    private final KeyStoreManager mKeyStoreManager;
 
     public DiskRepositoryImpl(@NonNull RestApi restApi,
                               @NonNull DiskInfoMapper diskInfoMapper,
-                              @NonNull ImageListMapper imageListMapper) {
+                              @NonNull ImageListMapper imageListMapper,
+                              @NonNull KeyStoreManager keyStoreManager) {
         mRestApi = restApi;
         mDiskInfoMapper = diskInfoMapper;
         mImageListMapper = imageListMapper;
+        mKeyStoreManager = keyStoreManager;
     }
 
     @Override
@@ -41,6 +45,11 @@ public class DiskRepositoryImpl implements DiskRepository {
     public Observable<ImageListModel> loadPhotos(Map<String, String> map) {
         return mRestApi.getPhotos(map)
                 .map(mImageListMapper::convert);
+    }
+
+    @Override
+    public void logoutUser() {
+        mKeyStoreManager.deleteToken();
     }
 
 }

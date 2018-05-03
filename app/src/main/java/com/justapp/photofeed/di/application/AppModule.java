@@ -4,9 +4,10 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.justapp.photofeed.keystore.KeyStoreHelper;
-import com.justapp.photofeed.keystore.KeyStoreManager;
-import com.justapp.photofeed.keystore.KeyStoreManagerImpl;
+import com.justapp.photofeed.data.keystore.KeyStoreHelper;
+import com.justapp.photofeed.data.keystore.KeyStoreManager;
+import com.justapp.photofeed.data.keystore.KeyStoreManagerImpl;
+import com.justapp.photofeed.data.network.AuthInterceptor;
 
 import javax.inject.Singleton;
 
@@ -31,4 +32,11 @@ public class AppModule {
                                                   @NonNull KeyStoreHelper helper) {
         return new KeyStoreManagerImpl(context, helper);
     }
+
+    @Singleton
+    @Provides
+    AuthInterceptor provideAuthInterceptor() {
+        return new AuthInterceptor();
+    }
+
 }

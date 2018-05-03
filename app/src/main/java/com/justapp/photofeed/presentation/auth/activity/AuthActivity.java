@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.justapp.photofeed.R;
 import com.justapp.photofeed.di.auth.AuthInjector;
 import com.justapp.photofeed.presentation.auth.presenter.AuthPresenter;
@@ -64,6 +65,11 @@ public class AuthActivity extends MvpAppCompatActivity implements AuthView {
     @Override
     public void startPhotoFeed() {
         mAuthRouter.startPhotoFeed(this);
+    }
+
+    @ProvidePresenter
+    public AuthPresenter provideAuthPresenter() {
+        return mAuthPresenter;
     }
 
     private void initViews() {
