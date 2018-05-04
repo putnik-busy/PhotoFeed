@@ -1,6 +1,7 @@
 package com.justapp.photofeed;
 
 import android.app.Application;
+import android.support.v7.app.AppCompatDelegate;
 
 import com.justapp.photofeed.di.application.AppInjector;
 
@@ -14,6 +15,7 @@ public class PhotoFeedApp extends Application {
         super.onCreate();
         AppInjector.createAppComponent(this);
         AppInjector.getAppComponent().inject(this);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
 }

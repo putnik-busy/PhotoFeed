@@ -1,16 +1,14 @@
 package com.justapp.photofeed.domain;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.justapp.photofeed.di.scope.AuthScope;
 import com.justapp.photofeed.domain.repository.AuthRepository;
 
-<<<<<<< HEAD
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-=======
->>>>>>> origin/master
 import javax.inject.Inject;
 
 /**
@@ -26,19 +24,18 @@ public class AuthInteractor {
         mAuthRepository = authRepository;
     }
 
-    public void saveToken(@NonNull String token) {
-<<<<<<< HEAD
-        mAuthRepository.saveToken(parseToken(token));
-=======
-        mAuthRepository.saveToken(token);
->>>>>>> origin/master
+    public void saveToken(@NonNull String data) {
+        String token = parseToken(data);
+        if (token != null) {
+            mAuthRepository.saveToken(token);
+        }
     }
 
     public boolean hasToken() {
         return mAuthRepository.hasToken();
     }
 
-<<<<<<< HEAD
+    @Nullable
     private String parseToken(String data) {
         String token = null;
         Pattern pattern = Pattern.compile("access_token=(.*?)(&|$)");
@@ -49,6 +46,4 @@ public class AuthInteractor {
         return token;
     }
 
-=======
->>>>>>> origin/master
 }

@@ -1,8 +1,10 @@
 package com.justapp.photofeed.presentation.feed.presenter;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 
 import com.arellomobile.mvp.InjectViewState;
+import com.justapp.photofeed.data.keystore.KeyStoreManager;
 import com.justapp.photofeed.domain.DiskInteractor;
 import com.justapp.photofeed.models.local.disk.resources.ImageListModel;
 import com.justapp.photofeed.presentation.base.BasePresenter;
@@ -11,8 +13,13 @@ import com.justapp.photofeed.rx.RxSchedulers;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
+import io.reactivex.Maybe;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * @author Sergey Rodionov
@@ -22,6 +29,7 @@ public class FeedPresenter extends BasePresenter<PhotoView> {
 
     private DiskInteractor mDiskInteractor;
     private RxSchedulers mRxSchedulers;
+    private KeyStoreManager mKeyStoreManager;
     private CompositeDisposable mCompositeDisposable;
 
     @Inject

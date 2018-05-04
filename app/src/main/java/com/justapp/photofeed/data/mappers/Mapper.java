@@ -5,9 +5,9 @@ import android.support.annotation.NonNull;
 /**
  * @author Sergey Rodionov
  */
-public interface Mapper<R, L> {
+public interface Mapper<S, L> {
 
     @NonNull
-    L convert(R remote);
+    L convert(S remote);
 
 }

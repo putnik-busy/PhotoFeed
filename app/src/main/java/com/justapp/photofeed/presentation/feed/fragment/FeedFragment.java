@@ -17,10 +17,8 @@ import android.widget.TextView;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.justapp.photofeed.R;
-import com.justapp.photofeed.di.data.DataComponent;
 import com.justapp.photofeed.di.data.DataInjector;
 import com.justapp.photofeed.models.local.disk.resources.ItemModel;
-import com.justapp.photofeed.presentation.auth.presenter.AuthPresenter;
 import com.justapp.photofeed.presentation.base.BaseFragment;
 import com.justapp.photofeed.presentation.feed.adapter.PhotoFeedAdapter;
 import com.justapp.photofeed.presentation.feed.adapter.RecyclerViewItemListener;
@@ -64,7 +62,7 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DataInjector.createDataComponent().inject(this);
-       // getComponent(DataComponent.class).inject(this);
+        // getComponent(DataComponent.class).inject(this);
     }
 
     @Nullable
@@ -81,7 +79,8 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
         initViews(view);
         mFeedPresenter.attachView(this);
         mPhotoFeedAdapter = new PhotoFeedAdapter(this, mPicasso);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),  view.getResources().getInteger(R.integer.grid_span));
+        int spanCount = view.getResources().getInteger(R.integer.grid_span);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), spanCount);
         mRecyclerView.setAdapter(mPhotoFeedAdapter);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.addOnScrollListener(new PhotosOnScrollListener(layoutManager));
@@ -166,9 +165,6 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
     private class PhotosOnScrollListener extends RecyclerView.OnScrollListener {
 
         private final WeakReference<GridLayoutManager> mGridLayoutManager;
-        private int mItemVisible;
-        private int mItemTotal;
-        private int mItemPast;
 
         private PhotosOnScrollListener(GridLayoutManager gridLayoutManager) {
             mGridLayoutManager = new WeakReference<>(gridLayoutManager);
@@ -178,11 +174,11 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             GridLayoutManager layoutManager = mGridLayoutManager.get();
             if (dy > 0 && layoutManager != null) {
-                mItemVisible = layoutManager.getChildCount();
-                mItemTotal = layoutManager.getItemCount();
-                mItemPast = layoutManager.findFirstVisibleItemPosition();
+                int itemVisible = layoutManager.getChildCount();
+                int itemTotal = layoutManager.getItemCount();
+                int itemPast = layoutManager.findFirstVisibleItemPosition();
 
-                if (!mIsLoading && (mItemVisible + mItemPast) >= mItemTotal) {
+                if (!mIsLoading && (itemVisible + itemPast) >= itemTotal) {
                     mIsLoading = true;
                     showProgress(true);
                     mFeedPresenter.loadPhotos(PAGINATION_ITEMS_COUNT,

@@ -1,16 +1,18 @@
 package com.justapp.photofeed.di.application;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.jakewharton.picasso.OkHttp3Downloader;
+import com.justapp.photofeed.data.keystore.KeyStoreManager;
 import com.justapp.photofeed.data.network.AuthInterceptor;
 import com.justapp.photofeed.data.network.LoggingInterceptor;
 import com.justapp.photofeed.data.network.RestApi;
-import com.justapp.photofeed.data.keystore.KeyStoreManager;
 import com.justapp.photofeed.rx.RxSchedulers;
 import com.squareup.picasso.Picasso;
 
@@ -81,8 +83,14 @@ public class NetModule {
     Picasso providePicasso(@NonNull Context context) {
         return new Picasso.Builder(context)
                 .downloader(new OkHttp3Downloader(context))
-                .loggingEnabled(false)
-                .indicatorsEnabled(true)
+                .listener(new Picasso.Listener() {
+                    @Override
+                    public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
+                        exception.printStackTrace();
+                        Log.d("TAG", exception.getMessage());
+                    }
+                })
+                .loggingEnabled(true)
                 .build();
     }
 

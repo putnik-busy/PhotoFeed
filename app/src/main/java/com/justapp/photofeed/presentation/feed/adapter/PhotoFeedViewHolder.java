@@ -1,6 +1,8 @@
 package com.justapp.photofeed.presentation.feed.adapter;
 
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -35,9 +37,9 @@ public class PhotoFeedViewHolder extends RecyclerView.ViewHolder implements View
     }
 
     public void bindView(ItemModel itemModel) {
+        Drawable placeholderDrawable = ResourcesCompat.getDrawable(mImageView.getResources(), R.drawable.ic_photo_black, null);
+        Drawable errorDrawable = ResourcesCompat.getDrawable(mImageView.getResources(), R.drawable.ic_error_black, null);
         mPicasso.load(itemModel.getPreview())
-                .placeholder(R.drawable.ic_photo_black)
-                .error(R.drawable.ic_error_black)
                 .into(mImageView);
     }
 }
