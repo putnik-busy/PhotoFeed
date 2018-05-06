@@ -1,9 +1,7 @@
 package com.justapp.photofeed.di.application;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -84,15 +82,8 @@ public class NetModule {
                            @NonNull OkHttpClient client) {
         return new Picasso.Builder(context)
                 .downloader(new OkHttp3Downloader(client))
-                .listener(new Picasso.Listener() {
-                    @Override
-                    public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
-                        exception.printStackTrace();
-                        Log.d("TAG", exception.getMessage());
-                    }
-                })
-                .loggingEnabled(true)
-                .indicatorsEnabled(true)
+                .loggingEnabled(false)
+                .indicatorsEnabled(false)
                 .build();
     }
 

@@ -34,7 +34,6 @@ ext {
     daggerVersion = '2.14.1'
     rxJavaVersion = '2.1.1'
     rxAndroidVersion = '2.0.1'
-    rxLintVersion = '1.6'
     retrofitVersion = '2.3.0'
     okHttpVersion = '3.4.1'
     photoViewVersion = '2.1.2'
@@ -69,7 +68,6 @@ dependencies {
     //rxjava2
     implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
-    implementation "nl.littlerobots.rxlint:rxlint:$rxLintVersion"
 
     //retrofit&OkHttp
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"

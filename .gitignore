@@ -7,15 +7,35 @@
 
 # Java class files
 *.class
+/bak
+/out
+/gen
+/bin
+/true
+*/bin/*
+*/bin/**
+*/gen/*
+*/tmp/*
+*/builds/*
+*/classes/*
+.idea/*
+**/gen/**
 
 # Generated files
 bin/
 gen/
 out/
 
+project.properties
+*/project.properties
+*.iml
+*.ipr
+local.properties
+*/local.properties
+
 # Gradle files
 .gradle/
-build/
+build
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -32,14 +52,6 @@ proguard/
 # Android Studio captures folder
 captures/
 
-# Intellij
-*.iml
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/gradle.xml
-.idea/dictionaries
-.idea/libraries
-
 # Keystore files
 *.jks
 
@@ -48,9 +60,3 @@ captures/
 
 # Google Services (e.g. APIs or Firebase)
 google-services.json
-
-# Freeline
-freeline.py
-freeline/
-freeline_project_description.json
-.idea/vcs.xml
