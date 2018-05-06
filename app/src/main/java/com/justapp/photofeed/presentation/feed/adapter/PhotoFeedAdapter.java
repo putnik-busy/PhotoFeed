@@ -33,7 +33,7 @@ public class PhotoFeedAdapter extends RecyclerView.Adapter<PhotoFeedViewHolder> 
     @Override
     public PhotoFeedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.photo_item, parent, false);
+        View view = inflater.inflate(R.layout.feed_photo_item, parent, false);
         return new PhotoFeedViewHolder(view, mPicasso, mRecyclerViewItemListener);
     }
 
@@ -49,16 +49,15 @@ public class PhotoFeedAdapter extends RecyclerView.Adapter<PhotoFeedViewHolder> 
 
     public void addPhotos(ItemModel item) {
         mItemModels.add(item);
-        notifyItemInserted(mItemModels.size() - 1);
+        notifyItemInserted(getItemCount() - 1);
     }
 
     public void addAllPhotos(@NonNull List<ItemModel> itemModels) {
-        mItemModels.clear();
         mItemModels.addAll(itemModels);
         notifyDataSetChanged();
     }
 
-    public List<ItemModel> getPhotos() {
+    public List<ItemModel> getItemModels() {
         return mItemModels;
     }
 }

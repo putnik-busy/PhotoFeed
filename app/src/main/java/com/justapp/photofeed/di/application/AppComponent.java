@@ -18,7 +18,7 @@ import dagger.Component;
 @Component(modules = {
         AppModule.class,
         NetModule.class,
-        RxModule.class
+        RxModule.class,
 })
 public interface AppComponent {
 

@@ -9,6 +9,8 @@ import com.justapp.photofeed.data.network.RestApi;
 import com.justapp.photofeed.data.repository.DiskRepositoryImpl;
 import com.justapp.photofeed.di.scope.DataScope;
 import com.justapp.photofeed.domain.repository.DiskRepository;
+import com.justapp.photofeed.routers.photoview.PhotoViewRouter;
+import com.justapp.photofeed.routers.photoview.PhotoViewRouterImpl;
 
 import dagger.Module;
 import dagger.Provides;
@@ -26,6 +28,12 @@ public class DataModule {
                                                 @NonNull ImageListMapper imageListMapper,
                                                 @NonNull KeyStoreManager keyStoreManager) {
         return new DiskRepositoryImpl(restApi, diskInfoMapper, imageListMapper, keyStoreManager);
+    }
+
+    @DataScope
+    @Provides
+    public PhotoViewRouter providePhotoViewRouter() {
+        return new PhotoViewRouterImpl();
     }
 
 }

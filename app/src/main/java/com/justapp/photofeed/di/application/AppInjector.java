@@ -10,10 +10,11 @@ public class AppInjector {
 
     private static AppComponent mAppComponent;
 
-    public static void createAppComponent(@NonNull Application application) {
+    public static AppComponent createAppComponent(@NonNull Application application) {
         mAppComponent = DaggerAppComponent.builder()
                 .application(application)
                 .build();
+        return mAppComponent;
     }
 
     public static AppComponent getAppComponent() {

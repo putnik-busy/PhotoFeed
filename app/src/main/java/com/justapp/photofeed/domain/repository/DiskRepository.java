@@ -5,7 +5,6 @@ import com.justapp.photofeed.models.local.disk.resources.ImageListModel;
 
 import java.util.Map;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
 
 /**
@@ -15,7 +14,7 @@ public interface DiskRepository {
 
     Single<DiskInfoModel> loadDiskInfo();
 
-    Observable<ImageListModel> loadPhotos(Map<String, String> map);
+    Single<ImageListModel> loadPhotos(Map<String, String> map);
 
     void logoutUser();
 }

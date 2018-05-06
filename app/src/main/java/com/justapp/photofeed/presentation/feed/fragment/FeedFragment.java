@@ -13,17 +13,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.justapp.photofeed.R;
-import com.justapp.photofeed.di.data.DataInjector;
+import com.justapp.photofeed.di.data.DataComponent;
 import com.justapp.photofeed.models.local.disk.resources.ItemModel;
 import com.justapp.photofeed.presentation.base.BaseFragment;
 import com.justapp.photofeed.presentation.feed.adapter.PhotoFeedAdapter;
 import com.justapp.photofeed.presentation.feed.adapter.RecyclerViewItemListener;
 import com.justapp.photofeed.presentation.feed.presenter.FeedPresenter;
 import com.justapp.photofeed.presentation.feed.view.PhotoView;
+import com.justapp.photofeed.routers.photoview.PhotoViewRouter;
 import com.squareup.picasso.Picasso;
 
 import java.lang.ref.WeakReference;
@@ -41,7 +43,8 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
 
     private RecyclerView mRecyclerView;
     private TextView mEmptyTextView;
-    private ContentLoadingProgressBar mProgressBar;
+    private ContentLoadingProgressBar mContentProgressBar;
+    private ContentLoadingProgressBar mPaginationProgressBar;
     private PhotoFeedAdapter mPhotoFeedAdapter;
     private boolean mIsLoading;
 
@@ -50,9 +53,11 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
     FeedPresenter mFeedPresenter;
     @Inject
     Picasso mPicasso;
+    @Inject
+    PhotoViewRouter mPhotoViewRouter;
 
     @NonNull
-    public static FeedFragment getInstance() {
+    public static FeedFragment newInstance() {
         FeedFragment feedFragment = new FeedFragment();
         feedFragment.setHasOptionsMenu(true);
         return feedFragment;
@@ -61,8 +66,7 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DataInjector.createDataComponent().inject(this);
-        // getComponent(DataComponent.class).inject(this);
+        getComponent(DataComponent.class).inject(this);
     }
 
     @Nullable
@@ -79,76 +83,60 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
         initViews(view);
         mFeedPresenter.attachView(this);
         mPhotoFeedAdapter = new PhotoFeedAdapter(this, mPicasso);
-        int spanCount = view.getResources().getInteger(R.integer.grid_span);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), spanCount);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), getResources().getInteger(R.integer.grid_span));
         mRecyclerView.setAdapter(mPhotoFeedAdapter);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.addOnScrollListener(new PhotosOnScrollListener(layoutManager));
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         mFeedPresenter.loadPhotos(PAGINATION_ITEMS_COUNT, mPhotoFeedAdapter.getItemCount());
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mRecyclerView.clearOnScrollListeners();
         mFeedPresenter.detachView(this);
-        DataInjector.clearDataModule();
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.photo_feed_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id) {
-            case R.id.menu_share:
-                // do stuff, like showing settings fragment
-                return true;
-
-            case R.id.menu_settings:
-                // do stuff, like showing settings fragment
-                return true;
-        }
-
-        return false;
+        return id == R.id.menu_settings;
     }
 
     @Override
     public void showProgress(boolean loading) {
-        mProgressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
+        mContentProgressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void showPhotos(List<ItemModel> list) {
         mPhotoFeedAdapter.addAllPhotos(list);
-        showEmpty(mPhotoFeedAdapter.getItemCount() == 0);
-        if (mIsLoading && mProgressBar.getVisibility() == View.VISIBLE) {
+        if (mIsLoading && mContentProgressBar.getVisibility() == View.VISIBLE) {
             mIsLoading = false;
-            showProgress(false);
+            mPaginationProgressBar.setVisibility(View.GONE);
         }
     }
 
     @Override
-    public void showEmpty(boolean isEmpty) {
-        mEmptyTextView.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
+    public void showEmpty() {
+        mEmptyTextView.setVisibility(View.VISIBLE);
+        mRecyclerView.setVisibility(View.GONE);
     }
 
     @Override
     public void showErrorMessage(String message) {
-
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder sender, int adapterPosition, int viewType) {
-
+        ItemModel itemModel = mPhotoFeedAdapter.getItemModels().get(adapterPosition);
+        mPhotoViewRouter.startPhotoView(requireActivity(), itemModel.getFile());
     }
 
     @ProvidePresenter
@@ -159,7 +147,8 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
     private void initViews(@NonNull View view) {
         mRecyclerView = view.findViewById(R.id.recycler_view);
         mEmptyTextView = view.findViewById(R.id.text_view_empty);
-        mProgressBar = view.findViewById(R.id.progress_bar_loading);
+        mContentProgressBar = view.findViewById(R.id.progress_bar_item_loading);
+        mPaginationProgressBar = view.findViewById(R.id.progress_bar_pagination_loading);
     }
 
     private class PhotosOnScrollListener extends RecyclerView.OnScrollListener {
@@ -174,15 +163,14 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             GridLayoutManager layoutManager = mGridLayoutManager.get();
             if (dy > 0 && layoutManager != null) {
-                int itemVisible = layoutManager.getChildCount();
-                int itemTotal = layoutManager.getItemCount();
-                int itemPast = layoutManager.findFirstVisibleItemPosition();
+                int childCount = layoutManager.getChildCount();
+                int totalItemCount = layoutManager.getItemCount();
+                int lastVisibleItem = layoutManager.findFirstVisibleItemPosition();
 
-                if (!mIsLoading && (itemVisible + itemPast) >= itemTotal) {
+                if (!mIsLoading && (childCount + lastVisibleItem) >= totalItemCount) {
                     mIsLoading = true;
-                    showProgress(true);
-                    mFeedPresenter.loadPhotos(PAGINATION_ITEMS_COUNT,
-                            mPhotoFeedAdapter.getItemCount());
+                    mPaginationProgressBar.setVisibility(View.VISIBLE);
+                    mFeedPresenter.loadPhotos(PAGINATION_ITEMS_COUNT, mPhotoFeedAdapter.getItemCount());
                 }
             }
         }

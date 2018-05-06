@@ -8,16 +8,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.justapp.photofeed.R;
+import com.justapp.photofeed.di.application.HasComponent;
+import com.justapp.photofeed.di.data.DataComponent;
 import com.justapp.photofeed.di.data.DataInjector;
 import com.justapp.photofeed.presentation.feed.fragment.FeedFragment;
+import com.justapp.photofeed.utils.ActivityUtils;
 
-public class FeedActivity extends AppCompatActivity {
+public class FeedActivity extends AppCompatActivity implements HasComponent<DataComponent> {
+
+    private DataComponent mDataComponent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mDataComponent = DataInjector.createDataComponent();
+        mDataComponent.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_container);
-        DataInjector.createDataComponent().inject(this);
         setupToolBar();
         initFragment();
     }
@@ -34,9 +40,8 @@ public class FeedActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentById(R.id.container);
         if (fragment == null) {
-            fragmentManager.beginTransaction()
-                    .add(R.id.container, FeedFragment.getInstance(), FeedFragment.TAG)
-                    .commit();
+            ActivityUtils.addFragmentInActivity(fragmentManager, FeedFragment.newInstance(),
+                    R.id.container, FeedFragment.TAG);
         }
     }
 
@@ -49,4 +54,8 @@ public class FeedActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public DataComponent getComponent() {
+        return mDataComponent;
+    }
 }

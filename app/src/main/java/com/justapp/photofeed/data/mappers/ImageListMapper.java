@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import com.justapp.photofeed.models.local.disk.resources.ImageListModel;
 import com.justapp.photofeed.models.local.disk.resources.ItemModel;
 import com.justapp.photofeed.models.remote.disk.resources.ImageListResponse;
-import com.justapp.photofeed.models.remote.disk.resources.Item;
+import com.justapp.photofeed.models.remote.disk.resources.ImageResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ public class ImageListMapper implements Mapper<ImageListResponse, ImageListModel
         Preconditions.checkNotNull(remote);
         ImageListModel imageListModel = new ImageListModel();
         List<ItemModel> itemModels = new ArrayList<>();
-        for (Item item : remote.getItems()) {
+        for (ImageResponse item : remote.getItems()) {
             ItemModel itemModel = mItemMapper.convert(item);
             itemModels.add(itemModel);
         }

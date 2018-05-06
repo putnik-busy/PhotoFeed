@@ -13,8 +13,7 @@ public class PhotoFeedApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        AppInjector.createAppComponent(this);
-        AppInjector.getAppComponent().inject(this);
+        AppInjector.createAppComponent(this).inject(this);
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 

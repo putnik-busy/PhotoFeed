@@ -29,6 +29,7 @@ public final class ActivityUtils {
                                                  String tag) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.addToBackStack(tag);
         transaction.replace(container, fragment, tag).commit();
     }
 

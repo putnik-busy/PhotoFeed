@@ -80,9 +80,10 @@ public class NetModule {
 
     @Singleton
     @Provides
-    Picasso providePicasso(@NonNull Context context) {
+    Picasso providePicasso(@NonNull Context context,
+                           @NonNull OkHttpClient client) {
         return new Picasso.Builder(context)
-                .downloader(new OkHttp3Downloader(context))
+                .downloader(new OkHttp3Downloader(client))
                 .listener(new Picasso.Listener() {
                     @Override
                     public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
@@ -91,6 +92,7 @@ public class NetModule {
                     }
                 })
                 .loggingEnabled(true)
+                .indicatorsEnabled(true)
                 .build();
     }
 

@@ -15,6 +15,6 @@ public final class ComponentUtils {
 
     @SuppressWarnings("unchecked")
     public static <C> C getComponent(Context context, Class<C> componentType) {
-        return componentType.cast(((HasComponent<C>) context.getApplicationContext()).getComponent());
+        return componentType.cast(((HasComponent<C>) context).getComponent());
     }
 }

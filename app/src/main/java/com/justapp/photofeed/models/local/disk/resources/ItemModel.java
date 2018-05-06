@@ -1,12 +1,16 @@
 package com.justapp.photofeed.models.local.disk.resources;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * @author Sergey Rodionov
  */
-public class ItemModel {
+public class ItemModel implements Parcelable {
 
     private String mName;
     private String mPreview;
+    private String mFile;
     private String mCreated;
     private String mModified;
     private String mPath;
@@ -14,6 +18,35 @@ public class ItemModel {
     private String mType;
     private String mMimeType;
     private int mSize;
+
+    public ItemModel() {
+
+    }
+
+    public ItemModel(Parcel in) {
+        mName = in.readString();
+        mPreview = in.readString();
+        mFile = in.readString();
+        mCreated = in.readString();
+        mModified = in.readString();
+        mPath = in.readString();
+        mMd5 = in.readString();
+        mType = in.readString();
+        mMimeType = in.readString();
+        mSize = in.readInt();
+    }
+
+    public static final Creator<ItemModel> CREATOR = new Creator<ItemModel>() {
+        @Override
+        public ItemModel createFromParcel(Parcel in) {
+            return new ItemModel(in);
+        }
+
+        @Override
+        public ItemModel[] newArray(int size) {
+            return new ItemModel[size];
+        }
+    };
 
     public String getName() {
         return mName;
@@ -29,6 +62,14 @@ public class ItemModel {
 
     public void setPreview(String preview) {
         mPreview = preview;
+    }
+
+    public String getFile() {
+        return mFile;
+    }
+
+    public void setFile(String file) {
+        mFile = file;
     }
 
     public String getCreated() {
@@ -98,6 +139,8 @@ public class ItemModel {
         if (mName != null ? !mName.equals(itemModel.mName) : itemModel.mName != null) return false;
         if (mPreview != null ? !mPreview.equals(itemModel.mPreview) : itemModel.mPreview != null)
             return false;
+        if (mFile != null ? !mFile.equals(itemModel.mFile) : itemModel.mFile != null)
+            return false;
         if (mCreated != null ? !mCreated.equals(itemModel.mCreated) : itemModel.mCreated != null)
             return false;
         if (mModified != null ? !mModified.equals(itemModel.mModified) : itemModel.mModified != null)
@@ -135,5 +178,23 @@ public class ItemModel {
                 ", mMimeType='" + mMimeType + '\'' +
                 ", mSize=" + mSize +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mName);
+        dest.writeString(mPreview);
+        dest.writeString(mCreated);
+        dest.writeString(mModified);
+        dest.writeString(mPath);
+        dest.writeString(mMd5);
+        dest.writeString(mType);
+        dest.writeString(mMimeType);
+        dest.writeInt(mSize);
     }
 }

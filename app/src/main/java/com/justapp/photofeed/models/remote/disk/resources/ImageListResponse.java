@@ -9,17 +9,17 @@ import java.util.List;
 public class ImageListResponse {
 
     @SerializedName("items")
-    private List<Item> mItems = new ArrayList<>();
+    private List<ImageResponse> mItems = new ArrayList<>();
     @SerializedName("limit")
     private int mLimit;
     @SerializedName("offset")
     private int mOffset;
 
-    public List<Item> getItems() {
+    public List<ImageResponse> getItems() {
         return mItems;
     }
 
-    public void setItems(List<Item> items) {
+    public void setItems(List<ImageResponse> items) {
         mItems = items;
     }
 

@@ -5,7 +5,6 @@ import com.justapp.photofeed.models.remote.disk.resources.ImageListResponse;
 
 import java.util.Map;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.QueryMap;
@@ -19,5 +18,5 @@ public interface RestApi {
     Single<DiskInfoResponse> getDiskInfo();
 
     @GET("v1/disk/resources/files")
-    Observable<ImageListResponse> getPhotos(@QueryMap Map<String, String> map);
+    Single<ImageListResponse> getPhotos(@QueryMap Map<String, String> map);
 }

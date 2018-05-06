@@ -3,12 +3,14 @@ package com.justapp.photofeed.models.remote.disk.resources;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Item {
+public class ImageResponse {
 
     @SerializedName("name")
     private String mName;
     @SerializedName("preview")
     private String mPreview;
+    @SerializedName("file")
+    private String mFile;
     @SerializedName("created")
     private String mCreated;
     @SerializedName("modified")
@@ -38,6 +40,14 @@ public class Item {
 
     public void setPreview(String preview) {
         mPreview = preview;
+    }
+
+    public String getFile() {
+        return mFile;
+    }
+
+    public void setFile(String file) {
+        mFile = file;
     }
 
     public String getCreated() {

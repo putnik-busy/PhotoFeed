@@ -3,14 +3,14 @@ package com.justapp.photofeed.data.mappers;
 import android.support.annotation.NonNull;
 
 import com.justapp.photofeed.models.local.disk.resources.ItemModel;
-import com.justapp.photofeed.models.remote.disk.resources.Item;
+import com.justapp.photofeed.models.remote.disk.resources.ImageResponse;
 
 import javax.inject.Inject;
 
 /**
  * @author Sergey Rodionov
  */
-public class ItemMapper implements Mapper<Item, ItemModel> {
+public class ItemMapper implements Mapper<ImageResponse, ItemModel> {
 
     @Inject
     public ItemMapper() {
@@ -19,7 +19,7 @@ public class ItemMapper implements Mapper<Item, ItemModel> {
 
     @NonNull
     @Override
-    public ItemModel convert(Item remote) {
+    public ItemModel convert(ImageResponse remote) {
         ItemModel itemModel = new ItemModel();
         itemModel.setCreated(remote.getCreated());
         itemModel.setMd5(remote.getMd5());
@@ -28,6 +28,7 @@ public class ItemMapper implements Mapper<Item, ItemModel> {
         itemModel.setName(remote.getName());
         itemModel.setPath(remote.getPath());
         itemModel.setPreview(remote.getPreview());
+        itemModel.setFile(remote.getFile());
         itemModel.setType(remote.getType());
         itemModel.setSize(remote.getSize());
         return itemModel;
