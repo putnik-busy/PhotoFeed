@@ -58,13 +58,13 @@ public final class KeyStoreManagerImpl implements KeyStoreManager {
 
     @Override
     public void saveToken(String token) {
-        mPreferencesHelper.setToken(token);
+        mPreferencesHelper.setToken(encrypt(token));
     }
 
     @NonNull
     @Override
     public String getToken() {
-        return mPreferencesHelper.getToken();
+        return decrypt(mPreferencesHelper.getToken());
     }
 
     @Override
