@@ -12,6 +12,10 @@ import dagger.BindsInstance;
 import dagger.Component;
 
 /**
+ * Основной компонент {@link Component} приложения.
+ * <p>
+ * Содержит модули, необходимые для работы на протяжении приложения
+ *
  * @author Sergey Rodionov
  */
 @Singleton

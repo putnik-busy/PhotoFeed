@@ -15,6 +15,10 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
+ * Модуль {@link Module} для работы после авторизции в приложении.
+ * <p>
+ * Провайдит зависимости, необходимые после авторизации
+ *
  * @author Sergey Rodionov
  */
 @Module

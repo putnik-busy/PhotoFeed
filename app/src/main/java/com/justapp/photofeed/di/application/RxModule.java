@@ -9,6 +9,8 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
+ * Rx модуль {@link Module} приложения
+ *
  * @author Sergey Rodionov
  */
 @Module

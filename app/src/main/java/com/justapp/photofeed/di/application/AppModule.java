@@ -15,6 +15,10 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
+ * Основной модуль {@link Module} приложения.
+ * <p>
+ * Провайдит зависимости, необходимые на протяжении жизни приложения
+ *
  * @author Sergey Rodionov
  */
 @Module

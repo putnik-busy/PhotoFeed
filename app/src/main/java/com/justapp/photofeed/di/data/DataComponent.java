@@ -5,9 +5,12 @@ import com.justapp.photofeed.presentation.feed.activity.FeedActivity;
 import com.justapp.photofeed.presentation.feed.fragment.FeedFragment;
 import com.justapp.photofeed.presentation.photoview.fragment.PhotoViewFragment;
 
+import dagger.Component;
 import dagger.Subcomponent;
 
 /**
+ * Компонент для работы после авторизации {@link Component} в приложении.
+ *
  * @author Sergey Rodionov
  */
 @DataScope
