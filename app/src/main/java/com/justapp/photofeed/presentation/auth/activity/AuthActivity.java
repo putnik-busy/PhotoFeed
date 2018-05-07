@@ -49,7 +49,6 @@ public class AuthActivity extends MvpAppCompatActivity implements AuthView {
     protected void onDestroy() {
         super.onDestroy();
         mAuthPresenter.destroyView(this);
-        AuthInjector.clearAuthModule();
     }
 
     @Override

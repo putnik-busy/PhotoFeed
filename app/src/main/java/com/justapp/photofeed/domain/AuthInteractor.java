@@ -35,6 +35,10 @@ public class AuthInteractor {
         return mAuthRepository.hasToken();
     }
 
+    public void onLogoff() {
+        mAuthRepository.onLogoff();
+    }
+
     @Nullable
     private String parseToken(String data) {
         String token = null;

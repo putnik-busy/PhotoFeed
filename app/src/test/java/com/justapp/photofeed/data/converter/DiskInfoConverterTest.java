@@ -1,5 +1,6 @@
 package com.justapp.photofeed.data.converter;
 
+import com.justapp.photofeed.data.generator.DiskResponseModelGenerator;
 import com.justapp.photofeed.models.local.disk.info.DiskInfoModel;
 import com.justapp.photofeed.models.remote.disk.info.DiskInfoResponse;
 

@@ -34,10 +34,6 @@ public class DiskInteractor {
         return mDiskRepository.loadPhotos(getFilterFilesParams(limit, offset));
     }
 
-    public void logout() {
-        mDiskRepository.logoutUser();
-    }
-
     private Map<String, String> getFilterFilesParams(int limit, int offset) {
         Map<String, String> params = new HashMap<>();
         params.put("media_type", "image");

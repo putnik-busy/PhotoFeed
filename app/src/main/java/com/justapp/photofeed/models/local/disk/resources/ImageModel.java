@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
+ * Локальная модель ответа от сервера, содержащая информацию подробную информацию о фото пользователя
+ *
  * @author Sergey Rodionov
  */
 public class ImageModel implements Parcelable {
@@ -20,7 +22,7 @@ public class ImageModel implements Parcelable {
     private int mSize;
 
     public ImageModel() {
-
+        //необходим для Parcelable
     }
 
     public ImageModel(Parcel in) {
@@ -36,6 +38,9 @@ public class ImageModel implements Parcelable {
         mSize = in.readInt();
     }
 
+    /**
+     * Creator для парселизации
+     */
     public static final Creator<ImageModel> CREATOR = new Creator<ImageModel>() {
         @Override
         public ImageModel createFromParcel(Parcel in) {
@@ -48,82 +53,162 @@ public class ImageModel implements Parcelable {
         }
     };
 
+    /**
+     * @return имя
+     */
     public String getName() {
         return mName;
     }
 
+    /**
+     * Устаналивает имя
+     *
+     * @param name
+     */
     public void setName(String name) {
         mName = name;
     }
 
+    /**
+     * @return URL превью файла
+     */
     public String getPreview() {
         return mPreview;
     }
 
+    /**
+     * Устаналивает URL превью файла
+     *
+     * @param preview URL превью файла
+     */
     public void setPreview(String preview) {
         mPreview = preview;
     }
 
+    /**
+     * @return URL для скачивания файла
+     */
     public String getFile() {
         return mFile;
     }
 
+    /**
+     * Устаналивает URL для скачивания файла
+     *
+     * @param file URL для скачивания файла
+     */
     public void setFile(String file) {
         mFile = file;
     }
 
+    /**
+     * @return дата создания
+     */
     public String getCreated() {
         return mCreated;
     }
 
+    /**
+     * Устанавливает дату создания
+     *
+     * @param created дата создания
+     */
     public void setCreated(String created) {
         mCreated = created;
     }
 
+    /**
+     * @return дата изменения
+     */
     public String getModified() {
         return mModified;
     }
 
+    /**
+     * Устаналивает дату изменения
+     *
+     * @param modified дата изменения
+     */
     public void setModified(String modified) {
         mModified = modified;
     }
 
+    /**
+     * @return путь к ресурсу
+     */
     public String getPath() {
         return mPath;
     }
 
+    /**
+     * Устаналивает  путь к ресурсу
+     *
+     * @param path путь к ресурсу
+     */
     public void setPath(String path) {
         mPath = path;
     }
 
+    /**
+     * @return MD5-хэш
+     */
     public String getMd5() {
         return mMd5;
     }
 
+    /**
+     * Устаналивает MD5-хэш
+     *
+     * @param md5 MD5-хэш
+     */
     public void setMd5(String md5) {
         mMd5 = md5;
     }
 
+    /**
+     * @return тип
+     */
     public String getType() {
         return mType;
     }
 
+    /**
+     * Устанавливает тип
+     *
+     * @param type тип
+     */
     public void setType(String type) {
         mType = type;
     }
 
+    /**
+     * @return MIME-тип файла
+     */
     public String getMimeType() {
         return mMimeType;
     }
 
+    /**
+     * Устанавливает MIME-тип файла
+     *
+     * @param mimeType MIME-тип файла
+     */
     public void setMimeType(String mimeType) {
         mMimeType = mimeType;
     }
 
+    /**
+     * @return размер файла
+     */
     public int getSize() {
         return mSize;
     }
 
+    /**
+     * Устанавливает размер файла
+     *
+     * @param size размер файла
+     */
     public void setSize(int size) {
         mSize = size;
     }
@@ -217,4 +302,5 @@ public class ImageModel implements Parcelable {
         dest.writeString(mMimeType);
         dest.writeInt(mSize);
     }
+
 }

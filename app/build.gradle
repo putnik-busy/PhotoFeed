@@ -35,12 +35,13 @@ ext {
     okHttpVersion = '3.4.1'
     photoViewVersion = '2.1.2'
     espressoVersion = '3.0.1'
-    mockitoVersion = '2.7.1'
+    mockitoVersion = '1.10.19'
     runnerVersion = '1.0.1'
     gsonVersion = '2.8.2'
     picassoVersion = '2.5.2'
     picassoDownloaderVersion = '1.0.2'
     moxyVersion = '1.5.3'
+    powermockVersion = '1.6.6'
 
     //android-support
     appcompatVersion = '27.1.1'
@@ -55,6 +56,10 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
     androidTestImplementation "com.android.support.test:runner:$runnerVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoVersion"
+    testImplementation "org.powermock:powermock-module-junit4:$powermockVersion"
+    testImplementation "org.powermock:powermock-module-junit4-rule:$powermockVersion"
+    testImplementation "org.powermock:powermock-api-mockito:$powermockVersion"
+    testImplementation "org.powermock:powermock-classloading-xstream:$powermockVersion"
 
     //dagger2
     implementation "com.google.dagger:dagger:$daggerVersion"

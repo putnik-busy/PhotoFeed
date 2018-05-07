@@ -9,13 +9,18 @@ import java.util.Map;
 import io.reactivex.Single;
 
 /**
+ * Репозиторий, предоставляющий операции над фото пользователя и получения информации о диске
+ *
  * @author Sergey Rodionov
  */
 public interface DiskRepository {
 
+    /**
+     * Загружает информацию о диске
+     *
+     * @return информация о диске
+     */
     Single<DiskInfoModel> loadDiskInfo();
 
     Single<List<ImageModel>> loadPhotos(Map<String, String> map);
-
-    void logoutUser();
 }

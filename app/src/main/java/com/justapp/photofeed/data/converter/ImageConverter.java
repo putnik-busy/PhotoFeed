@@ -16,7 +16,7 @@ import javax.inject.Inject;
  *
  * @author Sergey Rodionov
  */
-public final class ImageConverter extends AbstractOneWayConverter<ImageResponse, ImageModel> {
+public class ImageConverter extends AbstractOneWayConverter<ImageResponse, ImageModel> {
 
     @Inject
     public ImageConverter() {

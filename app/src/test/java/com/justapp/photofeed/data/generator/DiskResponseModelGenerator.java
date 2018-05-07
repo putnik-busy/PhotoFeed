@@ -1,16 +1,20 @@
-package com.justapp.photofeed.data.converter;
+package com.justapp.photofeed.data.generator;
 
 import com.justapp.photofeed.models.local.disk.info.DiskInfoModel;
 import com.justapp.photofeed.models.local.disk.resources.ImageModel;
 import com.justapp.photofeed.models.remote.disk.info.DiskInfoResponse;
+import com.justapp.photofeed.models.remote.disk.resources.ImageListResponse;
 import com.justapp.photofeed.models.remote.disk.resources.ImageResponse;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Генератор моделей ответов с Диска
  *
  * @author Sergey Rodionov
  */
-final class DiskResponseModelGenerator {
+public final class DiskResponseModelGenerator {
 
     //Информация о диске
     private static final int USED_SPACE = 100;
@@ -28,8 +32,9 @@ final class DiskResponseModelGenerator {
     private static final String PREVIEW = "https://test.ru";
     private static final int IMAGE_SIZE = 123;
     private static final String TYPE = "file";
+    private static final int LIMIT = 10;
 
-    static DiskInfoModel createDiskInfoModel() {
+    public static DiskInfoModel createDiskInfoModel() {
         DiskInfoModel model = new DiskInfoModel();
         model.setUsedSpace(USED_SPACE);
         model.setTrashSize(TRASH_SIZE);
@@ -37,7 +42,7 @@ final class DiskResponseModelGenerator {
         return model;
     }
 
-    static DiskInfoResponse createDiskInfoResponse() {
+    public static DiskInfoResponse createDiskInfoResponse() {
         DiskInfoResponse response = new DiskInfoResponse();
         response.setUsedSpace(USED_SPACE);
         response.setTrashSize(TRASH_SIZE);
@@ -45,7 +50,7 @@ final class DiskResponseModelGenerator {
         return response;
     }
 
-    static ImageModel createImageModel() {
+    public static ImageModel createImageModel() {
         ImageModel model = new ImageModel();
         model.setCreated(CREATED_INFO);
         model.setFile(FILE_NAME);
@@ -60,7 +65,13 @@ final class DiskResponseModelGenerator {
         return model;
     }
 
-    static ImageResponse createImageResponse() {
+    public static List<ImageModel> createListImageModel() {
+        List<ImageModel> list = new ArrayList<>();
+        list.add(createImageModel());
+        return list;
+    }
+
+    public static ImageResponse createImageResponse() {
         ImageResponse response = new ImageResponse();
         response.setCreated(CREATED_INFO);
         response.setFile(FILE_NAME);
@@ -73,6 +84,20 @@ final class DiskResponseModelGenerator {
         response.setSize(IMAGE_SIZE);
         response.setType(TYPE);
         return response;
+    }
+
+    public static ImageListResponse createImageListResponse() {
+        ImageListResponse response = new ImageListResponse();
+        response.setItems(createListImageResponse());
+        response.setLimit(LIMIT);
+        response.setOffset(LIMIT);
+        return response;
+    }
+
+    public static List<ImageResponse> createListImageResponse() {
+        List<ImageResponse> list = new ArrayList<>();
+        list.add(createImageResponse());
+        return list;
     }
 
 }

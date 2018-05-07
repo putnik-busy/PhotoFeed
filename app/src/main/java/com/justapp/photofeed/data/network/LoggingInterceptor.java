@@ -12,13 +12,14 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
+ * Реализация {@link Interceptor}, предназначенная для логгирования запросов/ответов к серверу
+ *
  * @author Sergey Rodionov
  */
 public class LoggingInterceptor implements Interceptor {
 
     private static final String TAG = "LoggingInterceptor";
 
-    private static LoggingInterceptor sLoggingInterceptor;
     private final HttpLoggingInterceptor mHttpLoggingInterceptor;
 
     public LoggingInterceptor() {
@@ -28,13 +29,9 @@ public class LoggingInterceptor implements Interceptor {
                 HttpLoggingInterceptor.Level.NONE);
     }
 
-    public static LoggingInterceptor getLoggingInterceptor() {
-        if (sLoggingInterceptor == null) {
-            sLoggingInterceptor = new LoggingInterceptor();
-        }
-        return sLoggingInterceptor;
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
         return mHttpLoggingInterceptor.intercept(chain);

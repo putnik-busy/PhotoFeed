@@ -16,7 +16,7 @@ import dagger.internal.Preconditions;
  *
  * @author Sergey Rodionov
  */
-public final class DiskInfoConverter implements OneWayConverter<DiskInfoResponse, DiskInfoModel> {
+public class DiskInfoConverter implements OneWayConverter<DiskInfoResponse, DiskInfoModel> {
 
     @Inject
     public DiskInfoConverter() {

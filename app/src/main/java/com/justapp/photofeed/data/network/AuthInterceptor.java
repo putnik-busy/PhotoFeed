@@ -9,6 +9,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
+ * Реализация {@link Interceptor}, предназначенная для подстановки токена в заголовок запроса
+ *
  * @author Sergey Rodionov
  */
 public class AuthInterceptor implements Interceptor {
@@ -17,6 +19,9 @@ public class AuthInterceptor implements Interceptor {
     private static final String HEADER = "Authorization";
     private String mToken = "";
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
         Request request = chain.request();
@@ -27,6 +32,11 @@ public class AuthInterceptor implements Interceptor {
         return chain.proceed(request);
     }
 
+    /**
+     * Проставляем токен, полученный после предоставления прав доступа пользователем
+     *
+     * @param token пользовательский токен
+     */
     public void setToken(@NonNull String token) {
         mToken = token;
     }
