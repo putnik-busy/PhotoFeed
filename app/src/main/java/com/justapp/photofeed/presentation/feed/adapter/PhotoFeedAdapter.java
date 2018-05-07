@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.justapp.photofeed.R;
-import com.justapp.photofeed.models.local.disk.resources.ItemModel;
+import com.justapp.photofeed.models.local.disk.resources.ImageModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -20,13 +20,13 @@ public class PhotoFeedAdapter extends RecyclerView.Adapter<PhotoFeedViewHolder> 
 
     private final RecyclerViewItemListener mRecyclerViewItemListener;
     private final Picasso mPicasso;
-    private final List<ItemModel> mItemModels;
+    private final List<ImageModel> mImageModels;
 
     public PhotoFeedAdapter(@NonNull RecyclerViewItemListener recyclerViewItemListener,
                             @NonNull Picasso picasso) {
         mRecyclerViewItemListener = recyclerViewItemListener;
         mPicasso = picasso;
-        mItemModels = new ArrayList<>();
+        mImageModels = new ArrayList<>();
     }
 
     @NonNull
@@ -39,25 +39,25 @@ public class PhotoFeedAdapter extends RecyclerView.Adapter<PhotoFeedViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull PhotoFeedViewHolder holder, int position) {
-        holder.bindView(mItemModels.get(position));
+        holder.bindView(mImageModels.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mItemModels.size();
+        return mImageModels.size();
     }
 
-    public void addPhotos(ItemModel item) {
-        mItemModels.add(item);
+    public void addPhotos(ImageModel item) {
+        mImageModels.add(item);
         notifyItemInserted(getItemCount() - 1);
     }
 
-    public void addAllPhotos(@NonNull List<ItemModel> itemModels) {
-        mItemModels.addAll(itemModels);
+    public void addAllPhotos(@NonNull List<ImageModel> imageModels) {
+        mImageModels.addAll(imageModels);
         notifyDataSetChanged();
     }
 
-    public List<ItemModel> getItemModels() {
-        return mItemModels;
+    public List<ImageModel> getImageModels() {
+        return mImageModels;
     }
 }

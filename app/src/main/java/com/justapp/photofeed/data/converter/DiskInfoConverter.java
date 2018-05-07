@@ -1,7 +1,9 @@
-package com.justapp.photofeed.data.mappers;
+package com.justapp.photofeed.data.converter;
 
 import android.support.annotation.NonNull;
 
+import com.justapp.photofeed.data.base.OneWayConverter;
+import com.justapp.photofeed.data.network.RestApi;
 import com.justapp.photofeed.models.local.disk.info.DiskInfoModel;
 import com.justapp.photofeed.models.remote.disk.info.DiskInfoResponse;
 
@@ -10,15 +12,20 @@ import javax.inject.Inject;
 import dagger.internal.Preconditions;
 
 /**
+ * Реализация {@link OneWayConverter} для запроса {@link RestApi#getDiskInfo()}
+ *
  * @author Sergey Rodionov
  */
-public class DiskInfoMapper implements Mapper<DiskInfoResponse, DiskInfoModel> {
+public final class DiskInfoConverter implements OneWayConverter<DiskInfoResponse, DiskInfoModel> {
 
     @Inject
-    public DiskInfoMapper() {
+    public DiskInfoConverter() {
         //необходим для dagger
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @NonNull
     @Override
     public DiskInfoModel convert(@NonNull DiskInfoResponse remote) {

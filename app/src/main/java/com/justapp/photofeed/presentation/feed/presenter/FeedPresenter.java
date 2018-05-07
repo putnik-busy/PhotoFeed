@@ -4,10 +4,12 @@ import android.support.annotation.NonNull;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.justapp.photofeed.domain.DiskInteractor;
-import com.justapp.photofeed.models.local.disk.resources.ImageListModel;
+import com.justapp.photofeed.models.local.disk.resources.ImageModel;
 import com.justapp.photofeed.presentation.base.BasePresenter;
 import com.justapp.photofeed.presentation.feed.view.PhotoView;
 import com.justapp.photofeed.rx.RxSchedulers;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -36,13 +38,14 @@ public class FeedPresenter extends BasePresenter<PhotoView> {
                 .observeOn(mRxSchedulers.getMainThreadScheduler())
                 .doOnSubscribe(__ -> getViewState().showProgress(true))
                 .doAfterTerminate(() -> getViewState().showProgress(false))
-                .subscribe(new DisposableSingleObserver<ImageListModel>() {
+                .subscribe(new DisposableSingleObserver<List<ImageModel>>() {
+
                     @Override
-                    public void onSuccess(ImageListModel imageListModel) {
-                        if (imageListModel.getItems().isEmpty()) {
+                    public void onSuccess(List<ImageModel> imageModels) {
+                        if (imageModels.isEmpty()) {
                             getViewState().showEmpty();
                         } else {
-                            getViewState().showPhotos(imageListModel.getItems());
+                            getViewState().showPhotos(imageModels);
                         }
                     }
 

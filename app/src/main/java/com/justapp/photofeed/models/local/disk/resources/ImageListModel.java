@@ -11,14 +11,14 @@ import java.util.List;
  */
 public class ImageListModel implements Parcelable {
 
-    private List<ItemModel> mItems = new ArrayList<>();
+    private List<ImageModel> mImages = new ArrayList<>();
 
     public ImageListModel() {
 
     }
 
     public ImageListModel(Parcel in) {
-        mItems = in.createTypedArrayList(ItemModel.CREATOR);
+        mImages = in.createTypedArrayList(ImageModel.CREATOR);
     }
 
     public static final Creator<ImageListModel> CREATOR = new Creator<ImageListModel>() {
@@ -33,33 +33,37 @@ public class ImageListModel implements Parcelable {
         }
     };
 
-    public List<ItemModel> getItems() {
-        return mItems;
+    public List<ImageModel> getImages() {
+        return mImages;
     }
 
-    public void setItems(List<ItemModel> items) {
-        mItems = items;
+    public void setImages(List<ImageModel> images) {
+        mImages = images;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         ImageListModel that = (ImageListModel) o;
 
-        return mItems != null ? mItems.equals(that.mItems) : that.mItems == null;
+        return mImages != null ? mImages.equals(that.mImages) : that.mImages == null;
     }
 
     @Override
     public int hashCode() {
-        return mItems != null ? mItems.hashCode() : 0;
+        return mImages != null ? mImages.hashCode() : 0;
     }
 
     @Override
     public String toString() {
         return "ImageListModel{" +
-                "mItems=" + mItems +
+                "mImages=" + mImages +
                 '}';
     }
 
@@ -70,6 +74,6 @@ public class ImageListModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeTypedList(mItems);
+        dest.writeTypedList(mImages);
     }
 }

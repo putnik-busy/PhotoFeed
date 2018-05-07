@@ -3,7 +3,7 @@ package com.justapp.photofeed.presentation.feed.view;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
 import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
-import com.justapp.photofeed.models.local.disk.resources.ItemModel;
+import com.justapp.photofeed.models.local.disk.resources.ImageModel;
 import com.justapp.photofeed.presentation.base.BaseView;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public interface PhotoView extends BaseView {
     void showProgress(boolean loading);
 
     @StateStrategyType(AddToEndSingleStrategy.class)
-    void showPhotos(List<ItemModel> list);
+    void showPhotos(List<ImageModel> list);
 
     void showEmpty();
 

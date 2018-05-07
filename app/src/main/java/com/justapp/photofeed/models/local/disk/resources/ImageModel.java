@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /**
  * @author Sergey Rodionov
  */
-public class ItemModel implements Parcelable {
+public class ImageModel implements Parcelable {
 
     private String mName;
     private String mPreview;
@@ -19,11 +19,11 @@ public class ItemModel implements Parcelable {
     private String mMimeType;
     private int mSize;
 
-    public ItemModel() {
+    public ImageModel() {
 
     }
 
-    public ItemModel(Parcel in) {
+    public ImageModel(Parcel in) {
         mName = in.readString();
         mPreview = in.readString();
         mFile = in.readString();
@@ -36,15 +36,15 @@ public class ItemModel implements Parcelable {
         mSize = in.readInt();
     }
 
-    public static final Creator<ItemModel> CREATOR = new Creator<ItemModel>() {
+    public static final Creator<ImageModel> CREATOR = new Creator<ImageModel>() {
         @Override
-        public ItemModel createFromParcel(Parcel in) {
-            return new ItemModel(in);
+        public ImageModel createFromParcel(Parcel in) {
+            return new ImageModel(in);
         }
 
         @Override
-        public ItemModel[] newArray(int size) {
-            return new ItemModel[size];
+        public ImageModel[] newArray(int size) {
+            return new ImageModel[size];
         }
     };
 
@@ -130,31 +130,50 @@ public class ItemModel implements Parcelable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
-        ItemModel itemModel = (ItemModel) o;
+        ImageModel that = (ImageModel) o;
 
-        if (mSize != itemModel.mSize) return false;
-        if (mName != null ? !mName.equals(itemModel.mName) : itemModel.mName != null) return false;
-        if (mPreview != null ? !mPreview.equals(itemModel.mPreview) : itemModel.mPreview != null)
+        if (mSize != that.mSize) {
             return false;
-        if (mFile != null ? !mFile.equals(itemModel.mFile) : itemModel.mFile != null)
+        }
+        if (mName != null ? !mName.equals(that.mName) : that.mName != null) {
             return false;
-        if (mCreated != null ? !mCreated.equals(itemModel.mCreated) : itemModel.mCreated != null)
+        }
+        if (mPreview != null ? !mPreview.equals(that.mPreview) : that.mPreview != null) {
             return false;
-        if (mModified != null ? !mModified.equals(itemModel.mModified) : itemModel.mModified != null)
+        }
+        if (mFile != null ? !mFile.equals(that.mFile) : that.mFile != null) {
             return false;
-        if (mPath != null ? !mPath.equals(itemModel.mPath) : itemModel.mPath != null) return false;
-        if (mMd5 != null ? !mMd5.equals(itemModel.mMd5) : itemModel.mMd5 != null) return false;
-        if (mType != null ? !mType.equals(itemModel.mType) : itemModel.mType != null) return false;
-        return mMimeType != null ? mMimeType.equals(itemModel.mMimeType) : itemModel.mMimeType == null;
+        }
+        if (mCreated != null ? !mCreated.equals(that.mCreated) : that.mCreated != null) {
+            return false;
+        }
+        if (mModified != null ? !mModified.equals(that.mModified) : that.mModified != null) {
+            return false;
+        }
+        if (mPath != null ? !mPath.equals(that.mPath) : that.mPath != null) {
+            return false;
+        }
+        if (mMd5 != null ? !mMd5.equals(that.mMd5) : that.mMd5 != null) {
+            return false;
+        }
+        if (mType != null ? !mType.equals(that.mType) : that.mType != null) {
+            return false;
+        }
+        return mMimeType != null ? mMimeType.equals(that.mMimeType) : that.mMimeType == null;
     }
 
     @Override
     public int hashCode() {
         int result = mName != null ? mName.hashCode() : 0;
         result = 31 * result + (mPreview != null ? mPreview.hashCode() : 0);
+        result = 31 * result + (mFile != null ? mFile.hashCode() : 0);
         result = 31 * result + (mCreated != null ? mCreated.hashCode() : 0);
         result = 31 * result + (mModified != null ? mModified.hashCode() : 0);
         result = 31 * result + (mPath != null ? mPath.hashCode() : 0);
@@ -167,9 +186,10 @@ public class ItemModel implements Parcelable {
 
     @Override
     public String toString() {
-        return "ItemModel{" +
+        return "ImageModel{" +
                 "mName='" + mName + '\'' +
                 ", mPreview='" + mPreview + '\'' +
+                ", mFile='" + mFile + '\'' +
                 ", mCreated='" + mCreated + '\'' +
                 ", mModified='" + mModified + '\'' +
                 ", mPath='" + mPath + '\'' +

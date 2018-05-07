@@ -4,9 +4,10 @@ import android.support.annotation.NonNull;
 
 import com.justapp.photofeed.domain.repository.DiskRepository;
 import com.justapp.photofeed.models.local.disk.info.DiskInfoModel;
-import com.justapp.photofeed.models.local.disk.resources.ImageListModel;
+import com.justapp.photofeed.models.local.disk.resources.ImageModel;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -29,7 +30,7 @@ public class DiskInteractor {
         return mDiskRepository.loadDiskInfo();
     }
 
-    public Single<ImageListModel> loadPhotos(int limit, int offset) {
+    public Single<List<ImageModel>> loadPhotos(int limit, int offset) {
         return mDiskRepository.loadPhotos(getFilterFilesParams(limit, offset));
     }
 

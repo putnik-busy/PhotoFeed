@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.justapp.photofeed.R;
-import com.justapp.photofeed.models.local.disk.resources.ItemModel;
+import com.justapp.photofeed.models.local.disk.resources.ImageModel;
 import com.squareup.picasso.Picasso;
 
 import static android.support.v4.content.res.ResourcesCompat.getDrawable;
@@ -39,11 +39,11 @@ public class PhotoFeedViewHolder extends RecyclerView.ViewHolder implements View
         }
     }
 
-    public void bindView(ItemModel itemModel) {
+    public void bindView(ImageModel imageModel) {
         Resources resources = mImageView.getResources();
         Drawable placeholderDrawable = getDrawable(resources, R.drawable.ic_photo_black, null);
         Drawable errorDrawable = getDrawable(resources, R.drawable.ic_error_black, null);
-        mPicasso.load(itemModel.getPreview())
+        mPicasso.load(imageModel.getPreview())
                 .fit()
                 .centerCrop()
                 .placeholder(placeholderDrawable)

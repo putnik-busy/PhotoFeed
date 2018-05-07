@@ -19,7 +19,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.justapp.photofeed.R;
 import com.justapp.photofeed.di.data.DataComponent;
-import com.justapp.photofeed.models.local.disk.resources.ItemModel;
+import com.justapp.photofeed.models.local.disk.resources.ImageModel;
 import com.justapp.photofeed.presentation.base.BaseFragment;
 import com.justapp.photofeed.presentation.feed.adapter.PhotoFeedAdapter;
 import com.justapp.photofeed.presentation.feed.adapter.RecyclerViewItemListener;
@@ -114,7 +114,7 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
     }
 
     @Override
-    public void showPhotos(List<ItemModel> list) {
+    public void showPhotos(List<ImageModel> list) {
         mPhotoFeedAdapter.addAllPhotos(list);
         if (mIsLoading && mContentProgressBar.getVisibility() == View.VISIBLE) {
             mIsLoading = false;
@@ -135,8 +135,8 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder sender, int adapterPosition, int viewType) {
-        ItemModel itemModel = mPhotoFeedAdapter.getItemModels().get(adapterPosition);
-        mPhotoViewRouter.startPhotoView(requireActivity(), itemModel.getFile());
+        ImageModel imageModel = mPhotoFeedAdapter.getImageModels().get(adapterPosition);
+        mPhotoViewRouter.startPhotoView(requireActivity(), imageModel.getFile());
     }
 
     @ProvidePresenter

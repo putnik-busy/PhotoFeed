@@ -1,8 +1,9 @@
 package com.justapp.photofeed.domain.repository;
 
 import com.justapp.photofeed.models.local.disk.info.DiskInfoModel;
-import com.justapp.photofeed.models.local.disk.resources.ImageListModel;
+import com.justapp.photofeed.models.local.disk.resources.ImageModel;
 
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Single;
@@ -14,7 +15,7 @@ public interface DiskRepository {
 
     Single<DiskInfoModel> loadDiskInfo();
 
-    Single<ImageListModel> loadPhotos(Map<String, String> map);
+    Single<List<ImageModel>> loadPhotos(Map<String, String> map);
 
     void logoutUser();
 }
