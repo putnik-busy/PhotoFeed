@@ -8,6 +8,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
+ * Хелпер для работы с {@link SharedPreferences} хранилищем ключей
+ *
  * @author Sergey Rodionov
  */
 @Singleton
@@ -17,7 +19,6 @@ public final class KeyStoreHelper {
     private static final String PREF_KEY_AES = "PREF_KEY_AES";
     private static final String PREF_KEY_IV = "PREF_KEY_IV";
     private static final String KEY_TOKEN = "TOKEN";
-
 
     private SharedPreferences mSharedPreferences;
 

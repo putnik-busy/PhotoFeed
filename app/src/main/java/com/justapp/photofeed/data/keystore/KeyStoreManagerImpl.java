@@ -11,21 +11,29 @@ import android.util.Base64;
 
 import java.math.BigInteger;
 import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
 import java.security.KeyPairGenerator;
 import java.security.KeyStore;
+import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.SecureRandom;
+import java.security.UnrecoverableKeyException;
 import java.util.Calendar;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.security.auth.x500.X500Principal;
 
 /**
+ * Реализация {@link KeyStoreManager}
+ *
  * @author Sergey Rodionov
  */
 public final class KeyStoreManagerImpl implements KeyStoreManager {
@@ -56,17 +64,26 @@ public final class KeyStoreManagerImpl implements KeyStoreManager {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void saveToken(String token) {
+    public void saveToken(@NonNull String token) {
         mPreferencesHelper.setToken(encrypt(token));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @NonNull
     @Override
     public String getToken() {
         return decrypt(mPreferencesHelper.getToken());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void deleteToken() {
         mPreferencesHelper.clearToken();
@@ -92,7 +109,9 @@ public final class KeyStoreManagerImpl implements KeyStoreManager {
         }
     }
 
-    private void generateKeyStoreKey(Context context) throws Exception {
+    private void generateKeyStoreKey(Context context) throws NoSuchProviderException,
+            NoSuchAlgorithmException, InvalidAlgorithmParameterException {
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             generateRSAKeyApiM();
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
@@ -101,7 +120,9 @@ public final class KeyStoreManagerImpl implements KeyStoreManager {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private void generateRSAKeyApiM() throws Exception {
+    private void generateRSAKeyApiM() throws NoSuchProviderException, NoSuchAlgorithmException,
+            InvalidAlgorithmParameterException {
+
         KeyPairGenerator keyPairGenerator = KeyPairGenerator
                 .getInstance(KeyProperties.KEY_ALGORITHM_RSA, KEYSTORE_PROVIDER);
 
@@ -137,23 +158,33 @@ public final class KeyStoreManagerImpl implements KeyStoreManager {
         keyPairGenerator.generateKeyPair();
     }
 
-    private String encryptRSA(byte[] plainText) throws Exception {
+    private String encryptRSA(byte[] plainText) throws KeyStoreException, InvalidKeyException,
+            NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException,
+            IllegalBlockSizeException {
+
         PublicKey publicKey = mKeyStore.getCertificate(KEYSTORE_ALIAS).getPublicKey();
         Cipher cipher = Cipher.getInstance(RSA_MODE);
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);
         byte[] encryptedByte = cipher.doFinal(plainText);
+
         return Base64.encodeToString(encryptedByte, Base64.DEFAULT);
     }
 
-    private byte[] decryptRSA(String encryptedText) throws Exception {
+    private byte[] decryptRSA(String encryptedText) throws UnrecoverableKeyException,
+            NoSuchAlgorithmException, KeyStoreException, NoSuchPaddingException,
+            InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+
         PrivateKey privateKey = (PrivateKey) mKeyStore.getKey(KEYSTORE_ALIAS, null);
         Cipher cipher = Cipher.getInstance(RSA_MODE);
         cipher.init(Cipher.DECRYPT_MODE, privateKey);
         byte[] encryptedBytes = Base64.decode(encryptedText, Base64.DEFAULT);
+
         return cipher.doFinal(encryptedBytes);
     }
 
-    private void generateAESKey() throws Exception {
+    private void generateAESKey() throws NoSuchPaddingException, NoSuchAlgorithmException,
+            KeyStoreException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
+
         byte[] aesKey = new byte[16];
         SecureRandom secureRandom = new SecureRandom();
         secureRandom.nextBytes(aesKey);
@@ -166,18 +197,28 @@ public final class KeyStoreManagerImpl implements KeyStoreManager {
         mPreferencesHelper.setAESKey(encryptAESKey);
     }
 
-    private String encryptAES(String plainText) throws Exception {
+    private String encryptAES(String plainText) throws NoSuchPaddingException,
+            NoSuchAlgorithmException, UnrecoverableKeyException, InvalidKeyException,
+            IllegalBlockSizeException, KeyStoreException, BadPaddingException,
+            InvalidAlgorithmParameterException {
+
         Cipher cipher = Cipher.getInstance(AES_MODE);
         cipher.init(Cipher.ENCRYPT_MODE, getAESKey(), new IvParameterSpec(getIV()));
         byte[] encryptedBytes = cipher.doFinal(plainText.getBytes());
+
         return Base64.encodeToString(encryptedBytes, Base64.DEFAULT);
     }
 
     @NonNull
-    private String decryptAES(String encryptedText) throws Exception {
+    private String decryptAES(String encryptedText) throws NoSuchPaddingException,
+            NoSuchAlgorithmException, UnrecoverableKeyException, InvalidKeyException,
+            IllegalBlockSizeException, KeyStoreException, BadPaddingException,
+            InvalidAlgorithmParameterException {
+
         byte[] decodedBytes = Base64.decode(encryptedText.getBytes(), Base64.DEFAULT);
         Cipher cipher = Cipher.getInstance(AES_MODE);
         cipher.init(Cipher.DECRYPT_MODE, getAESKey(), new IvParameterSpec(getIV()));
+
         return new String(cipher.doFinal(decodedBytes));
     }
 
@@ -187,9 +228,13 @@ public final class KeyStoreManagerImpl implements KeyStoreManager {
     }
 
     @NonNull
-    private SecretKeySpec getAESKey() throws Exception {
+    private SecretKeySpec getAESKey() throws NoSuchPaddingException, UnrecoverableKeyException,
+            NoSuchAlgorithmException, KeyStoreException, BadPaddingException,
+            IllegalBlockSizeException, InvalidKeyException {
+
         String encryptedKey = mPreferencesHelper.getAESKey();
         byte[] aesKey = decryptRSA(encryptedKey);
+
         return new SecretKeySpec(aesKey, AES_MODE);
     }
 

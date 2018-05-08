@@ -10,6 +10,7 @@ import java.io.IOException;
 import okhttp3.Interceptor;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
+import timber.log.Timber;
 
 /**
  * Реализация {@link Interceptor}, предназначенная для логгирования запросов/ответов к серверу
@@ -24,7 +25,7 @@ public class LoggingInterceptor implements Interceptor {
 
     public LoggingInterceptor() {
         mHttpLoggingInterceptor = new HttpLoggingInterceptor(
-                message -> Log.v(TAG, message)
+                message -> Timber.v(TAG, message)
         ).setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY :
                 HttpLoggingInterceptor.Level.NONE);
     }
