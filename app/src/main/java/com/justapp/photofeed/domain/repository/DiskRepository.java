@@ -22,5 +22,11 @@ public interface DiskRepository {
      */
     Single<DiskInfoModel> loadDiskInfo();
 
+    /**
+     * Загружает список фото пользователя со смещением offset
+     *
+     * @param map контейнер с фильтрами
+     * @return список фото пользователя
+     */
     Single<List<ImageModel>> loadPhotos(Map<String, String> map);
 }

@@ -6,11 +6,11 @@ import java.lang.annotation.RetentionPolicy;
 import javax.inject.Scope;
 
 /**
- * Скоуп {@link Scope} для работы до авторизации в приложении
+ * Скоуп {@link Scope} для работы после авторизации в приложении
  *
  * @author Sergey Rodionov
  */
 @Scope
 @Retention(RetentionPolicy.RUNTIME)
-public @interface AuthScope {
+public @interface Data {
 }

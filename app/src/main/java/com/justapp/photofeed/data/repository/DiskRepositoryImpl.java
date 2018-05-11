@@ -26,6 +26,13 @@ public class DiskRepositoryImpl implements DiskRepository {
     private final DiskInfoConverter mDiskInfoConverter;
     private final ImageConverter mImageConverter;
 
+    /**
+     * Конструктор для {@link DiskRepositoryImpl}
+     *
+     * @param restApi           API для работы с Диском
+     * @param diskInfoConverter конвертор запроса информации о диске в локальную модель
+     * @param imageConverter    конвертор запроса информации о списке фото в локальную модель
+     */
     public DiskRepositoryImpl(@NonNull RestApi restApi,
                               @NonNull DiskInfoConverter diskInfoConverter,
                               @NonNull ImageConverter imageConverter) {
@@ -34,12 +41,18 @@ public class DiskRepositoryImpl implements DiskRepository {
         mImageConverter = imageConverter;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Single<DiskInfoModel> loadDiskInfo() {
         return mRestApi.getDiskInfo()
                 .map(mDiskInfoConverter::convert);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Single<List<ImageModel>> loadPhotos(Map<String, String> map) {
         return mRestApi.getPhotos(map)

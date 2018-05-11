@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import com.justapp.photofeed.data.keystore.KeyStoreManager;
 import com.justapp.photofeed.data.network.AuthInterceptor;
 import com.justapp.photofeed.data.repository.AuthRepositoryImpl;
-import com.justapp.photofeed.di.scope.AuthScope;
+import com.justapp.photofeed.di.scope.Auth;
 import com.justapp.photofeed.domain.repository.AuthRepository;
 import com.justapp.photofeed.routers.auth.AuthRouter;
 import com.justapp.photofeed.routers.auth.AuthRouterImpl;
@@ -23,16 +23,16 @@ import dagger.Provides;
 @Module
 public class AuthModule {
 
-    @AuthScope
+    @Auth
     @Provides
-    public AuthRepository provideAuthRepository(@NonNull AuthInterceptor authInterceptor,
-                                                @NonNull KeyStoreManager keyStoreManager) {
+    AuthRepository provideAuthRepository(@NonNull AuthInterceptor authInterceptor,
+                                         @NonNull KeyStoreManager keyStoreManager) {
         return new AuthRepositoryImpl(authInterceptor, keyStoreManager);
     }
 
-    @AuthScope
+    @Auth
     @Provides
-    public AuthRouter provideAuthRouter() {
+    AuthRouter provideAuthRouter() {
         return new AuthRouterImpl();
     }
 
