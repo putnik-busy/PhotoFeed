@@ -3,7 +3,9 @@
     <string name="feed">Лента</string>>
     <string name="settings">Настройки</string>>
     <string name="share">Поделиться</string>
-    <string name="title_auth_text">Авторизация</string>
     <string name="enter_button_text">Войти</string>
     <string name="auth_info_text">Для доступа к картинкам Яндекс.Диск \n войдите с учетной записью Яндекс</string>
+
+    <!--TalkBack-->
+    <string name="talk_back_auth_icon">Иконка авторизации</string>
 </resources>

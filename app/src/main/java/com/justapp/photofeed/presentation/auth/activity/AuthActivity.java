@@ -2,8 +2,6 @@ package com.justapp.photofeed.presentation.auth.activity;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
@@ -37,7 +35,6 @@ public class AuthActivity extends MvpAppCompatActivity implements AuthView {
         AuthInjector.createAuthComponent().inject(this);
         initViews();
         mAuthPresenter.attachView(this);
-        setupToolBar();
 
         Uri data = getIntent().getData();
         if (data != null) {
@@ -74,15 +71,6 @@ public class AuthActivity extends MvpAppCompatActivity implements AuthView {
     private void initViews() {
         mAuthButton = findViewById(R.id.auth_button);
         mAuthButton.setOnClickListener(view -> mAuthPresenter.enter());
-    }
-
-    private void setupToolBar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            getSupportActionBar().setTitle(R.string.title_auth_text);
-        }
     }
 
 }
