@@ -23,4 +23,6 @@
 
     <!-- sizes of views -->
     <dimen name="elevation_tiny">2dp</dimen>
+
+    <dimen name="card_insets">1dp</dimen>
 </resources>

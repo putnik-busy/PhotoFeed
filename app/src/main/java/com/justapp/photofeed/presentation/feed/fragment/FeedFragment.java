@@ -26,6 +26,7 @@ import com.justapp.photofeed.presentation.feed.adapter.RecyclerViewItemListener;
 import com.justapp.photofeed.presentation.feed.presenter.FeedPresenter;
 import com.justapp.photofeed.presentation.feed.view.PhotoView;
 import com.justapp.photofeed.routers.photoview.PhotoViewRouter;
+import com.justapp.photofeed.utils.GridDividerItemDecoration;
 import com.squareup.picasso.Picasso;
 
 import java.lang.ref.WeakReference;
@@ -83,8 +84,10 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
         initViews(view);
         mFeedPresenter.attachView(this);
         mPhotoFeedAdapter = new PhotoFeedAdapter(this, mPicasso);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), getResources().getInteger(R.integer.grid_span));
+        int spanCount = getResources().getInteger(R.integer.grid_span);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), spanCount);
         mRecyclerView.setAdapter(mPhotoFeedAdapter);
+        mRecyclerView.addItemDecoration(new GridDividerItemDecoration(getContext(), spanCount));
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.addOnScrollListener(new PhotosOnScrollListener(layoutManager));
         mFeedPresenter.loadPhotos(PAGINATION_ITEMS_COUNT, mPhotoFeedAdapter.getItemCount());

@@ -8,4 +8,5 @@
 
     <!--TalkBack-->
     <string name="talk_back_auth_icon">Иконка авторизации</string>
+    <string name="talk_back_photo_item">Фотография</string>
 </resources>
