@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Адаптер для ленты фото
+ *
  * @author Sergey Rodionov
  */
 public class PhotoFeedAdapter extends RecyclerView.Adapter<PhotoFeedViewHolder> {
@@ -22,6 +24,12 @@ public class PhotoFeedAdapter extends RecyclerView.Adapter<PhotoFeedViewHolder> 
     private final Picasso mPicasso;
     private final List<ImageModel> mImageModels;
 
+    /**
+     * Констурктор для {@link PhotoFeedAdapter}
+     *
+     * @param recyclerViewItemListener листенер событий клика по элементу
+     * @param picasso                  фреймворк для загрузки фото
+     */
     public PhotoFeedAdapter(@NonNull RecyclerViewItemListener recyclerViewItemListener,
                             @NonNull Picasso picasso) {
         mRecyclerViewItemListener = recyclerViewItemListener;
@@ -29,6 +37,9 @@ public class PhotoFeedAdapter extends RecyclerView.Adapter<PhotoFeedViewHolder> 
         mImageModels = new ArrayList<>();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @NonNull
     @Override
     public PhotoFeedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,26 +48,45 @@ public class PhotoFeedAdapter extends RecyclerView.Adapter<PhotoFeedViewHolder> 
         return new PhotoFeedViewHolder(view, mPicasso, mRecyclerViewItemListener);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onBindViewHolder(@NonNull PhotoFeedViewHolder holder, int position) {
         holder.bindView(mImageModels.get(position));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getItemCount() {
         return mImageModels.size();
     }
 
-    public void addPhotos(ImageModel item) {
+    /**
+     * Добавляет фото для отображения
+     *
+     * @param item модель, содержащая информация о фото
+     */
+    public void addPhoto(ImageModel item) {
         mImageModels.add(item);
         notifyItemInserted(getItemCount() - 1);
     }
 
+    /**
+     * Добавляет список фото для отображения
+     *
+     * @param imageModels модель, содержащая информация о фото
+     */
     public void addAllPhotos(@NonNull List<ImageModel> imageModels) {
         mImageModels.addAll(imageModels);
         notifyDataSetChanged();
     }
 
+    /**
+     * @return возвращает список фото
+     */
     public List<ImageModel> getImageModels() {
         return mImageModels;
     }

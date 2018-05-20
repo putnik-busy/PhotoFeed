@@ -10,10 +10,13 @@ import android.widget.ImageView;
 import com.justapp.photofeed.R;
 import com.justapp.photofeed.models.local.disk.resources.ImageModel;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
 import static android.support.v4.content.res.ResourcesCompat.getDrawable;
 
 /**
+ * Холдер для ленты фото
+ *
  * @author Sergey Rodionov
  */
 public class PhotoFeedViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -22,9 +25,16 @@ public class PhotoFeedViewHolder extends RecyclerView.ViewHolder implements View
     private final RecyclerViewItemListener mRecyclerViewItemListener;
     private ImageView mImageView;
 
-    public PhotoFeedViewHolder(@NonNull View itemView,
-                               @NonNull Picasso picasso,
-                               @NonNull RecyclerViewItemListener recyclerViewItemListener) {
+    /**
+     * Констурктор для {@link PhotoFeedViewHolder}
+     *
+     * @param itemView                 вью элемента списка
+     * @param picasso                  фреймворк для загрузки фото
+     * @param recyclerViewItemListener листенер событий клика по элементу
+     */
+    PhotoFeedViewHolder(@NonNull View itemView,
+                        @NonNull Picasso picasso,
+                        @NonNull RecyclerViewItemListener recyclerViewItemListener) {
         super(itemView);
         mPicasso = picasso;
         mRecyclerViewItemListener = recyclerViewItemListener;
@@ -32,6 +42,9 @@ public class PhotoFeedViewHolder extends RecyclerView.ViewHolder implements View
         mImageView.setOnClickListener(this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onClick(View v) {
         if (mRecyclerViewItemListener != null) {
@@ -39,15 +52,22 @@ public class PhotoFeedViewHolder extends RecyclerView.ViewHolder implements View
         }
     }
 
-    public void bindView(ImageModel imageModel) {
+    /**
+     * Привязывает данные из модели к вьюхам на форме
+     *
+     * @param imageModel модель, содержащая информация о фото
+     */
+    void bindView(ImageModel imageModel) {
         Resources resources = mImageView.getResources();
         Drawable placeholderDrawable = getDrawable(resources, R.drawable.ic_photo_black, null);
         Drawable errorDrawable = getDrawable(resources, R.drawable.ic_error_black, null);
-        mPicasso.load(imageModel.getPreview())
-                .fit()
+        RequestCreator requestCreator = mPicasso.load(imageModel.getPreview());
+        requestCreator.fit()
                 .centerCrop()
-                .placeholder(placeholderDrawable)
-                .error(errorDrawable)
-                .into(mImageView);
+                .placeholder(placeholderDrawable);
+        if (errorDrawable != null) {
+            requestCreator.error(errorDrawable);
+        }
+        requestCreator.into(mImageView);
     }
 }

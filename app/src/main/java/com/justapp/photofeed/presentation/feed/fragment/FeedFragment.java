@@ -35,6 +35,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
+ * Фрагмент ленты фотографий
+ *
  * @author Sergey Rodionov
  */
 public class FeedFragment extends BaseFragment implements PhotoView, RecyclerViewItemListener {
@@ -57,6 +59,11 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
     @Inject
     PhotoViewRouter mPhotoViewRouter;
 
+    /**
+     * Создает инстанс {@link FeedFragment}
+     *
+     * @return инстанс {@link FeedFragment}
+     */
     @NonNull
     public static FeedFragment newInstance() {
         FeedFragment feedFragment = new FeedFragment();
@@ -64,12 +71,18 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
         return feedFragment;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getComponent(DataComponent.class).inject(this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -78,6 +91,9 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
         return inflater.inflate(R.layout.fragment_photo_feed, container, false);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onViewCreated(@NonNull View view,
                               @Nullable Bundle savedInstanceState) {
@@ -85,14 +101,17 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
         mFeedPresenter.attachView(this);
         mPhotoFeedAdapter = new PhotoFeedAdapter(this, mPicasso);
         int spanCount = getResources().getInteger(R.integer.grid_span);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), spanCount);
+        GridLayoutManager layoutManager = new GridLayoutManager(requireContext(), spanCount);
         mRecyclerView.setAdapter(mPhotoFeedAdapter);
-        mRecyclerView.addItemDecoration(new GridDividerItemDecoration(getContext(), spanCount));
+        mRecyclerView.addItemDecoration(new GridDividerItemDecoration(requireContext(), spanCount));
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.addOnScrollListener(new PhotosOnScrollListener(layoutManager));
         mFeedPresenter.loadPhotos(PAGINATION_ITEMS_COUNT, mPhotoFeedAdapter.getItemCount());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -100,22 +119,34 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
         mFeedPresenter.detachView(this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.photo_feed_menu, menu);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         return id == R.id.menu_settings;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void showProgress(boolean loading) {
         mContentProgressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void showPhotos(List<ImageModel> list) {
         mPhotoFeedAdapter.addAllPhotos(list);
@@ -125,23 +156,37 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void showEmpty() {
         mEmptyTextView.setVisibility(View.VISIBLE);
         mRecyclerView.setVisibility(View.GONE);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void showErrorMessage(String message) {
+    public void showErrorMessage(@NonNull String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onItemClick(RecyclerView.ViewHolder sender, int adapterPosition, int viewType) {
         ImageModel imageModel = mPhotoFeedAdapter.getImageModels().get(adapterPosition);
         mPhotoViewRouter.startPhotoView(requireActivity(), imageModel.getFile());
     }
 
+    /**
+     * Провайдим презентер для Moxy
+     *
+     * @return презентер {@link FeedPresenter}
+     */
     @ProvidePresenter
     public FeedPresenter provideFeedPresenter() {
         return mFeedPresenter;

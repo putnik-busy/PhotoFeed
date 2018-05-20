@@ -8,6 +8,7 @@ import com.justapp.photofeed.data.keystore.KeyStoreHelper;
 import com.justapp.photofeed.data.keystore.KeyStoreManager;
 import com.justapp.photofeed.data.keystore.KeyStoreManagerImpl;
 import com.justapp.photofeed.data.network.AuthInterceptor;
+import com.justapp.photofeed.presentation.resources.ResourceManager;
 
 import javax.inject.Singleton;
 
@@ -26,13 +27,13 @@ public class AppModule {
 
     @Singleton
     @Provides
-    public Context provideAppContext(Application application) {
+    Context provideAppContext(Application application) {
         return application.getApplicationContext();
     }
 
     @Singleton
     @Provides
-    public KeyStoreManager provideKeyStoreManager(@NonNull Context context,
+    KeyStoreManager provideKeyStoreManager(@NonNull Context context,
                                                   @NonNull KeyStoreHelper helper) {
         return new KeyStoreManagerImpl(context, helper);
     }
@@ -41,6 +42,12 @@ public class AppModule {
     @Provides
     AuthInterceptor provideAuthInterceptor() {
         return new AuthInterceptor();
+    }
+
+    @Singleton
+    @Provides
+    ResourceManager provideResourceManager(@NonNull Context context) {
+        return new ResourceManager(context);
     }
 
 }

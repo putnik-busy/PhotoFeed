@@ -14,10 +14,16 @@ import com.justapp.photofeed.di.data.DataInjector;
 import com.justapp.photofeed.presentation.feed.fragment.FeedFragment;
 import com.justapp.photofeed.utils.ActivityUtils;
 
+/**
+ * Активити ленты фотографий
+ */
 public class FeedActivity extends AppCompatActivity implements HasComponent<DataComponent> {
 
     private DataComponent mDataComponent;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mDataComponent = DataInjector.createDataComponent();
@@ -28,6 +34,9 @@ public class FeedActivity extends AppCompatActivity implements HasComponent<Data
         initFragment();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -54,6 +63,9 @@ public class FeedActivity extends AppCompatActivity implements HasComponent<Data
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataComponent getComponent() {
         return mDataComponent;

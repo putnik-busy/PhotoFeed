@@ -8,16 +8,24 @@ import io.reactivex.schedulers.Schedulers;
 
 
 /**
+ * Реализация {@link RxSchedulers}
+ *
  * @author Sergey Rodionov
  */
 public class RxSchedulersImpl implements RxSchedulers {
 
+    /**
+     * {@inheritDoc}
+     */
     @NonNull
     @Override
     public Scheduler getMainThreadScheduler() {
         return AndroidSchedulers.mainThread();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @NonNull
     @Override
     public Scheduler getIOScheduler() {
