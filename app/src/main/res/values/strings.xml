@@ -6,6 +6,7 @@
     <string name="enter_button_text">Войти</string>
     <string name="auth_info_text">Для доступа к картинкам Яндекс.Диск \n войдите с учетной записью Яндекс</string>
     <string name="error_load_text">Ошибка загрузки</string>
+    <string name="stub_load_photos">Данные отсутствуют</string>
 
     <!--TalkBack-->
     <string name="talk_back_auth_icon">Иконка авторизации</string>

@@ -9,10 +9,10 @@ import io.reactivex.disposables.CompositeDisposable;
  * <p>
  * Тут будет какая-то общая логика для всех презентеров в приложении.
  *
- * @param <View> интерфейс для представления
+ * @param <V> интерфейс для представления
  * @author Sergey Rodionov
  */
-public class BasePresenter<View extends BaseView> extends MvpPresenter<View> {
+public class BasePresenter<V extends BaseView> extends MvpPresenter<V> {
 
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
@@ -21,7 +21,7 @@ public class BasePresenter<View extends BaseView> extends MvpPresenter<View> {
      *
      * @return {@link CompositeDisposable}
      */
-    public final CompositeDisposable getRxCompositeDisposable() {
+    protected final CompositeDisposable getRxCompositeDisposable() {
         return mCompositeDisposable;
     }
 

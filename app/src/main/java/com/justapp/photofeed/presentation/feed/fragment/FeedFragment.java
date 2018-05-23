@@ -42,7 +42,7 @@ import javax.inject.Inject;
 public class FeedFragment extends BaseFragment implements PhotoView, RecyclerViewItemListener {
 
     public static final String TAG = "FeedFragment";
-    private static final int PAGINATION_ITEMS_COUNT = 10;
+    public static final int PAGINATION_ITEMS_COUNT = 10;
 
     private RecyclerView mRecyclerView;
     private TextView mEmptyTextView;
@@ -76,8 +76,8 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         getComponent(DataComponent.class).inject(this);
+        super.onCreate(savedInstanceState);
     }
 
     /**
@@ -98,15 +98,8 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
     public void onViewCreated(@NonNull View view,
                               @Nullable Bundle savedInstanceState) {
         initViews(view);
+        prepareAdapter();
         mFeedPresenter.attachView(this);
-        mPhotoFeedAdapter = new PhotoFeedAdapter(this, mPicasso);
-        int spanCount = getResources().getInteger(R.integer.grid_span);
-        GridLayoutManager layoutManager = new GridLayoutManager(requireContext(), spanCount);
-        mRecyclerView.setAdapter(mPhotoFeedAdapter);
-        mRecyclerView.addItemDecoration(new GridDividerItemDecoration(requireContext(), spanCount));
-        mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.addOnScrollListener(new PhotosOnScrollListener(layoutManager));
-        mFeedPresenter.loadPhotos(PAGINATION_ITEMS_COUNT, mPhotoFeedAdapter.getItemCount());
     }
 
     /**
@@ -160,7 +153,7 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
      * {@inheritDoc}
      */
     @Override
-    public void showEmpty() {
+    public void showStub() {
         mEmptyTextView.setVisibility(View.VISIBLE);
         mRecyclerView.setVisibility(View.GONE);
     }
@@ -197,6 +190,16 @@ public class FeedFragment extends BaseFragment implements PhotoView, RecyclerVie
         mEmptyTextView = view.findViewById(R.id.text_view_empty);
         mContentProgressBar = view.findViewById(R.id.progress_bar_item_loading);
         mPaginationProgressBar = view.findViewById(R.id.progress_bar_pagination_loading);
+    }
+
+    private void prepareAdapter() {
+        mPhotoFeedAdapter = new PhotoFeedAdapter(this, mPicasso);
+        int spanCount = getResources().getInteger(R.integer.grid_span);
+        GridLayoutManager layoutManager = new GridLayoutManager(requireContext(), spanCount);
+        mRecyclerView.setAdapter(mPhotoFeedAdapter);
+        mRecyclerView.addItemDecoration(new GridDividerItemDecoration(requireContext(), spanCount));
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.addOnScrollListener(new PhotosOnScrollListener(layoutManager));
     }
 
     private class PhotosOnScrollListener extends RecyclerView.OnScrollListener {

@@ -15,6 +15,7 @@ import java.util.List;
  *
  * @author Sergey Rodionov
  */
+@StateStrategyType(AddToEndSingleStrategy.class)
 public interface PhotoView extends BaseView {
 
     /**
@@ -22,7 +23,6 @@ public interface PhotoView extends BaseView {
      *
      * @param loading {@code true} если загрузка идет, {@code false} иначе
      */
-    @StateStrategyType(SkipStrategy.class)
     void showProgress(boolean loading);
 
     /**
@@ -30,19 +30,19 @@ public interface PhotoView extends BaseView {
      *
      * @param list список фото для отображения
      */
-    @StateStrategyType(AddToEndSingleStrategy.class)
     void showPhotos(List<ImageModel> list);
 
     /**
-     * Показать заглушку, например, в случае ошибки или отсутствия данных
+     * Показать заглушку, в случае ошибки или отсутствия данных
      */
-    void showEmpty();
+    void showStub();
 
     /**
      * Показать сообщение об ошибке
      *
      * @param message ресурс с текстом ошибки
      */
+    @StateStrategyType(SkipStrategy.class)
     void showErrorMessage(@NonNull String message);
 
 }

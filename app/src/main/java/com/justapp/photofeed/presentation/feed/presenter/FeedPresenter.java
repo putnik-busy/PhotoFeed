@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.justapp.photofeed.R;
+import com.justapp.photofeed.di.scope.Data;
 import com.justapp.photofeed.domain.DiskInteractor;
 import com.justapp.photofeed.presentation.base.BasePresenter;
 import com.justapp.photofeed.presentation.feed.view.PhotoView;
@@ -12,20 +13,20 @@ import com.justapp.photofeed.rx.RxSchedulers;
 
 import javax.inject.Inject;
 
-import io.reactivex.disposables.CompositeDisposable;
+import static com.justapp.photofeed.presentation.feed.fragment.FeedFragment.PAGINATION_ITEMS_COUNT;
 
 /**
  * Презентер ленты фотографий
  *
  * @author Sergey Rodionov
  */
+@Data
 @InjectViewState
 public class FeedPresenter extends BasePresenter<PhotoView> {
 
     private final DiskInteractor mDiskInteractor;
     private final RxSchedulers mRxSchedulers;
     private final ResourceManager mResourceManager;
-    private final CompositeDisposable mCompositeDisposable;
 
     /**
      * Конструктор для {@link FeedPresenter}
@@ -41,7 +42,12 @@ public class FeedPresenter extends BasePresenter<PhotoView> {
         mDiskInteractor = diskInteractor;
         mRxSchedulers = rxSchedulers;
         mResourceManager = resourceManager;
-        mCompositeDisposable = new CompositeDisposable();
+    }
+
+    @Override
+    protected void onFirstViewAttach() {
+        super.onFirstViewAttach();
+        loadPhotos(PAGINATION_ITEMS_COUNT, 0);
     }
 
     /**
@@ -51,23 +57,23 @@ public class FeedPresenter extends BasePresenter<PhotoView> {
      * @param offset смещение от начала списка
      */
     public void loadPhotos(int limit, int offset) {
-        mCompositeDisposable.add(mDiskInteractor
+        getRxCompositeDisposable().add(mDiskInteractor
                 .loadPhotos(limit, offset)
                 .subscribeOn(mRxSchedulers.getIOScheduler())
                 .observeOn(mRxSchedulers.getMainThreadScheduler())
-                .doOnSubscribe(__ -> getViewState().showProgress(true))
+                .doOnSubscribe(disposable -> getViewState().showProgress(true))
                 .doAfterTerminate(() -> getViewState().showProgress(false))
                 .subscribe(
                         imageModels -> {
                             if (imageModels.isEmpty()) {
-                                getViewState().showEmpty();
+                                getViewState().showStub();
                             } else {
                                 getViewState().showPhotos(imageModels);
                             }
                         },
                         throwable -> {
                             String textError = mResourceManager.getString(R.string.error_load_text);
-                            getViewState().showEmpty();
+                            getViewState().showStub();
                             getViewState().showErrorMessage(textError);
                         }));
     }
